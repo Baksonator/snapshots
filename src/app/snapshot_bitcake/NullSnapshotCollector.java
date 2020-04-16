@@ -25,4 +25,8 @@ public class NullSnapshotCollector implements SnapshotCollector {
 	@Override
 	public void startCollecting() {}
 
+	@Override
+	public int getMySnapshotVersion() {
+		return 0;
+	}
 }

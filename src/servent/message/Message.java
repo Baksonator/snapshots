@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import app.ServentInfo;
+import app.snapshot_bitcake.SnapshotID;
 
 /**
  * This is your basic message. It should cover most needs.
@@ -64,6 +65,11 @@ public interface Message extends Serializable {
 	 * The body of the message. Use this to see what your neighbors have sent you.
 	 */
 	String getMessageText();
+
+	/**
+	 * SnapshotIDS for this message.
+	 */
+	List<SnapshotID> getSnapshotIDS();
 	
 	/**
 	 * An id that is unique per servent. Combined with servent id, it will be unique
@@ -94,7 +100,13 @@ public interface Message extends Serializable {
 	 * the color being changed to white.
 	 */
 	Message setWhiteColor();
-	
+
+	/**
+	 * Alters the message and returns a new copy with everything intact, execpt
+	 * the snapshotIDS being set to the ones the current node has
+	 */
+	Message setSnapshotIDS();
+
 	/**
 	 * This method is invoked by the frameworks sender code. It is invoked
 	 * exactly before the message is being sent. If the message was held up

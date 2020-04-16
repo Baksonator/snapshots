@@ -12,7 +12,7 @@ import servent.message.Message;
  * Not too smart. Doesn't even check the neighbor list, so it actually allows cheating.
  * 
  * Depending on the configuration it delegates sending either to a {@link DelayedMessageSender}
- * in a new thread (non-FIFO) or stores the message in a queue for the {@link FifoSendWorker} (FIFO).
+ * in a new thread (non-FIFO) or stores the message in a queue for the {@link } (FIFO).
  * 
  * When reading, if we are FIFO, we send an ACK message on the same socket, so the other side
  * knows they can send the next message.

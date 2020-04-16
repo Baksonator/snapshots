@@ -1,9 +1,12 @@
 package servent.message.snapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import app.AppConfig;
 import app.ServentInfo;
 import app.snapshot_bitcake.LYSnapshotResult;
+import app.snapshot_bitcake.SnapshotID;
 import servent.message.BasicMessage;
 import servent.message.Message;
 import servent.message.MessageType;
@@ -20,21 +23,31 @@ public class LYTellMessage extends BasicMessage {
 		this.lySnapshotResult = lySnapshotResult;
 	}
 	
-	private LYTellMessage(MessageType messageType, ServentInfo sender, ServentInfo receiver, 
-			boolean white, List<ServentInfo> routeList, String messageText, int messageId,
-			LYSnapshotResult lySnapshotResult) {
-		super(messageType, sender, receiver, white, routeList, messageText, messageId);
+	private LYTellMessage(MessageType messageType, ServentInfo sender, ServentInfo receiver,
+						  boolean white, List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS,
+						  int messageId, LYSnapshotResult lySnapshotResult) {
+		super(messageType, sender, receiver, white, routeList, messageText, snapshotIDS, messageId);
 		this.lySnapshotResult = lySnapshotResult;
 	}
 
 	public LYSnapshotResult getLYSnapshotResult() {
 		return lySnapshotResult;
 	}
-	
+
 	@Override
 	public Message setRedColor() {
 		Message toReturn = new LYTellMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
-				false, getRoute(), getMessageText(), getMessageId(), getLYSnapshotResult());
+				false, getRoute(), getMessageText(), getSnapshotIDS(), getMessageId(), getLYSnapshotResult());
+		return toReturn;
+	}
+
+	@Override
+	public Message setSnapshotIDS() {
+		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
+
+		Message toReturn = new LYTellMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
+				isWhite(), getRoute(), getMessageText(), snapshotIDS, getMessageId(), getLYSnapshotResult());
+
 		return toReturn;
 	}
 }

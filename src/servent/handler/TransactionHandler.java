@@ -3,6 +3,7 @@ package servent.handler;
 import app.AppConfig;
 import app.snapshot_bitcake.BitcakeManager;
 import app.snapshot_bitcake.LaiYangBitcakeManager;
+import app.snapshot_bitcake.SnapshotID;
 import servent.message.Message;
 import servent.message.MessageType;
 
@@ -31,10 +32,15 @@ public class TransactionHandler implements MessageHandler {
 			
 			bitcakeManager.addSomeBitcakes(amountNumber);
 			synchronized (AppConfig.colorLock) {
-				if (bitcakeManager instanceof LaiYangBitcakeManager && clientMessage.isWhite()) {
+				if (bitcakeManager instanceof LaiYangBitcakeManager) {
+//				if (bitcakeManager instanceof LaiYangBitcakeManager && clientMessage.isWhite()) {
 					LaiYangBitcakeManager lyFinancialManager = (LaiYangBitcakeManager)bitcakeManager;
 					
 					lyFinancialManager.recordGetTransaction(clientMessage.getOriginalSenderInfo().getId(), amountNumber);
+					for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
+						lyFinancialManager.recordGetTransaction(snapshotID, clientMessage.getOriginalSenderInfo().getId(),
+								amountNumber);
+					}
 				}
 			}
 		} else {

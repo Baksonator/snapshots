@@ -26,14 +26,21 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 	public int getCurrentBitcakeAmount() {
 		return currentAmount.get();
 	}
-	
+
 	private Map<Integer, Integer> giveHistory = new ConcurrentHashMap<>();
 	private Map<Integer, Integer> getHistory = new ConcurrentHashMap<>();
+
+	private Map<SnapshotID, Map<Integer, Integer>> giveHistories = new ConcurrentHashMap<>();
+	private Map<SnapshotID, Map<Integer, Integer>> getHistories = new ConcurrentHashMap<>();
 	
 	public LaiYangBitcakeManager() {
 		for(Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
 			giveHistory.put(neighbor, 0);
 			getHistory.put(neighbor, 0);
+		}
+
+		for (Integer initId : AppConfig.initiatorIds) {
+			initMapForSnapshot(initId, 0);
 		}
 	}
 	
@@ -41,24 +48,36 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 	 * This value is protected by AppConfig.colorLock.
 	 * Access it only if you have the blessing.
 	 */
+	// Pamtis posebnu verziju za ovo za svakog inicijatora posebno, MOZDA
 	public int recordedAmount = 0;
 	
-	public void markerEvent(int collectorId, SnapshotCollector snapshotCollector) {
+	public void markerEvent(int collectorId, SnapshotCollector snapshotCollector, int version) {
 		synchronized (AppConfig.colorLock) {
+			int oldVersion = AppConfig.initiatorVersions.get(collectorId);
+			AppConfig.initiatorVersions.put(collectorId, version);
+			initMapForSnapshot(collectorId, AppConfig.initiatorVersions.get(collectorId));
+
 			AppConfig.isWhite.set(false);
 			recordedAmount = getCurrentBitcakeAmount();
 
 			LYSnapshotResult snapshotResult = new LYSnapshotResult(
 					AppConfig.myServentInfo.getId(), recordedAmount, giveHistory, getHistory);
+
+			LYSnapshotResult snapshotResult1 = new LYSnapshotResult(
+					AppConfig.myServentInfo.getId(), recordedAmount, giveHistories.get(new SnapshotID(collectorId, oldVersion)),
+					getHistories.get(new SnapshotID(collectorId, oldVersion)));
+
+			AppConfig.timestampedStandardPrint(giveHistories.get(new SnapshotID(collectorId, oldVersion)).toString());
+			AppConfig.timestampedStandardPrint(getHistories.get(new SnapshotID(collectorId, oldVersion)).toString());
 			
 			if (collectorId == AppConfig.myServentInfo.getId()) {
 				snapshotCollector.addLYSnapshotInfo(
 						AppConfig.myServentInfo.getId(),
-						snapshotResult);
+						snapshotResult1);
 			} else {
 			
 				Message tellMessage = new LYTellMessage(
-						AppConfig.myServentInfo, AppConfig.getInfoById(collectorId), snapshotResult);
+						AppConfig.myServentInfo, AppConfig.getInfoById(collectorId), snapshotResult1);
 				
 				MessageUtil.sendMessage(tellMessage);
 			}
@@ -66,17 +85,28 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			for (Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
 				Message clMarker = new LYMarkerMessage(AppConfig.myServentInfo, AppConfig.getInfoById(neighbor), collectorId);
 				MessageUtil.sendMessage(clMarker);
-				try {
-					/*
-					 * This sleep is here to artificially produce some white node -> red node messages.
-					 * Not actually recommended, as we are sleeping while we have colorLock.
-					 */
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					/*
+//					 * This sleep is here to artificially produce some white node -> red node messages.
+//					 * Not actually recommended, as we are sleeping while we have colorLock.
+//					 */
+//					Thread.sleep(100);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 			}
 		}
+	}
+
+	private void initMapForSnapshot(int initId, int version) {
+		Map<Integer, Integer> newGiveMap = new ConcurrentHashMap<>();
+		Map<Integer, Integer> newGetMap = new ConcurrentHashMap<>();
+		for (Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
+			newGiveMap.put(neighbor, 0);
+			newGetMap.put(neighbor, 0);
+		}
+		giveHistories.put(new SnapshotID(initId, version), newGiveMap);
+		getHistories.put(new SnapshotID(initId, version), newGetMap);
 	}
 	
 	private class MapValueUpdater implements BiFunction<Integer, Integer, Integer> {
@@ -99,5 +129,13 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 	
 	public void recordGetTransaction(int neighbor, int amount) {
 		getHistory.compute(neighbor, new MapValueUpdater(amount));
+	}
+
+	public void recordGiveTransaction(SnapshotID snapshotID, int neighbor, int amount) {
+		giveHistories.get(snapshotID).compute(neighbor, new MapValueUpdater(amount));
+	}
+
+	public void recordGetTransaction(SnapshotID snapshotID, int neighbor, int amount) {
+		getHistories.get(snapshotID).compute(neighbor, new MapValueUpdater(amount));
 	}
 }

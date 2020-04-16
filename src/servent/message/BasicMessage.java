@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import app.AppConfig;
 import app.ServentInfo;
+import app.snapshot_bitcake.SnapshotID;
 
 /**
  * A default message implementation. This should cover most situations.
@@ -24,6 +25,7 @@ public class BasicMessage implements Message {
 	private final List<ServentInfo> routeList;
 	private final String messageText;
 	private final boolean white;
+	private final List<SnapshotID> snapshotIDS;
 	
 	//This gives us a unique id - incremented in every natural constructor.
 	private static AtomicInteger messageCounter = new AtomicInteger(0);
@@ -36,6 +38,7 @@ public class BasicMessage implements Message {
 		this.white = AppConfig.isWhite.get();
 		this.routeList = new ArrayList<>();
 		this.messageText = "";
+		this.snapshotIDS = new ArrayList<>();
 		
 		this.messageId = messageCounter.getAndIncrement();
 	}
@@ -48,7 +51,21 @@ public class BasicMessage implements Message {
 		this.white = AppConfig.isWhite.get();
 		this.routeList = new ArrayList<>();
 		this.messageText = messageText;
+		this.snapshotIDS = new ArrayList<>();
 		
+		this.messageId = messageCounter.getAndIncrement();
+	}
+
+	public BasicMessage(MessageType type, ServentInfo originalSenderInfo, ServentInfo receiverInfo,
+						String messageText, List<SnapshotID> snapshotIDS) {
+		this.type = type;
+		this.originalSenderInfo = originalSenderInfo;
+		this.receiverInfo = receiverInfo;
+		this.white = AppConfig.isWhite.get();
+		this.routeList = new ArrayList<>();
+		this.messageText = messageText;
+		this.snapshotIDS = snapshotIDS;
+
 		this.messageId = messageCounter.getAndIncrement();
 	}
 	
@@ -81,21 +98,25 @@ public class BasicMessage implements Message {
 	public String getMessageText() {
 		return messageText;
 	}
-	
+
+	@Override
+	public List<SnapshotID> getSnapshotIDS() { return snapshotIDS; }
+
 	@Override
 	public int getMessageId() {
 		return messageId;
 	}
 	
 	protected BasicMessage(MessageType type, ServentInfo originalSenderInfo, ServentInfo receiverInfo,
-			boolean white, List<ServentInfo> routeList, String messageText, int messageId) {
+			boolean white, List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS, int messageId) {
 		this.type = type;
 		this.originalSenderInfo = originalSenderInfo;
 		this.receiverInfo = receiverInfo;
 		this.white = white;
 		this.routeList = routeList;
 		this.messageText = messageText;
-		
+		this.snapshotIDS = snapshotIDS;
+
 		this.messageId = messageId;
 	}
 	
@@ -111,7 +132,7 @@ public class BasicMessage implements Message {
 		List<ServentInfo> newRouteList = new ArrayList<>(routeList);
 		newRouteList.add(newRouteItem);
 		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-				getReceiverInfo(), isWhite(), newRouteList, getMessageText(), getMessageId());
+				getReceiverInfo(), isWhite(), newRouteList, getMessageText(), getSnapshotIDS(), getMessageId());
 		
 		return toReturn;
 	}
@@ -126,7 +147,7 @@ public class BasicMessage implements Message {
 			ServentInfo newReceiverInfo = AppConfig.getInfoById(newReceiverId);
 			
 			Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-					newReceiverInfo, isWhite(), getRoute(), getMessageText(), getMessageId());
+					newReceiverInfo, isWhite(), getRoute(), getMessageText(), getSnapshotIDS(), getMessageId());
 			
 			return toReturn;
 		} else {
@@ -140,7 +161,7 @@ public class BasicMessage implements Message {
 	@Override
 	public Message setRedColor() {
 		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-				getReceiverInfo(), false, getRoute(), getMessageText(), getMessageId());
+				getReceiverInfo(), false, getRoute(), getMessageText(), getSnapshotIDS(),  getMessageId());
 		
 		return toReturn;
 	}
@@ -148,11 +169,21 @@ public class BasicMessage implements Message {
 	@Override
 	public Message setWhiteColor() {
 		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-				getReceiverInfo(), true, getRoute(), getMessageText(), getMessageId());
+				getReceiverInfo(), true, getRoute(), getMessageText(), getSnapshotIDS(), getMessageId());
 		
 		return toReturn;
 	}
-	
+
+	@Override
+	public Message setSnapshotIDS() {
+		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
+
+		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
+				getReceiverInfo(), isWhite(), getRoute(), getMessageText(), snapshotIDS, getMessageId());
+
+		return toReturn;
+	}
+
 	/**
 	 * Comparing messages is based on their unique id and the original sender id.
 	 */

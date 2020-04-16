@@ -13,6 +13,7 @@ import app.AppConfig;
 import app.Cancellable;
 import app.snapshot_bitcake.LaiYangBitcakeManager;
 import app.snapshot_bitcake.SnapshotCollector;
+import app.snapshot_bitcake.SnapshotID;
 import servent.handler.MessageHandler;
 import servent.handler.NullHandler;
 import servent.handler.TransactionHandler;
@@ -56,26 +57,71 @@ public class SimpleServentListener implements Runnable, Cancellable {
 		
 		while (working) {
 			try {
-				Message clientMessage;
+				Message clientMessage = null;
 				
 				/*
 				 * Lai-Yang stuff. Process any red messages we got before we got the marker.
 				 * The marker contains the collector id, so we need to process that as our first
 				 * red message. 
 				 */
-				if (AppConfig.isWhite.get() == false && redMessages.size() > 0) {
-					clientMessage = redMessages.remove(0);
-				} else {
+				// Stavi da se provere sve poruke koje su stigle i ako je neka jednaka nasoj verziji stavi da se ona obradi
+				boolean shouldRead = true;
+				loop:
+				for (Message message : redMessages) {
+					for (SnapshotID snapshotID : message.getSnapshotIDS()) {
+						if (snapshotID.getVersion() > AppConfig.initiatorVersions.get(snapshotID.getInitId())) {
+							break;
+						}
+						clientMessage = message;
+						shouldRead = false;
+						redMessages.remove(message);
+						AppConfig.timestampedErrorPrint(message.toString());
+						break loop;
+					}
+//					SnapshotID mySnapshotID = message.getSnapshotIDS().stream()
+//							.findFirst()
+//							.filter(snapshotID -> snapshotID.getInitId() == Integer.parseInt(message.getMessageText()))
+//							.orElse(null);
+//					if (mySnapshotID.getVersion() <= AppConfig.initiatorVersions.get(mySnapshotID.getInitId())) {
+//						clientMessage = message;
+//						redMessages.remove(0);
+//						shouldRead = false;
+//						break;
+//					}
+				}
+//				if (AppConfig.isWhite.get() == false && redMessages.size() > 0) {
+//					clientMessage = redMessages.remove(0);
+//				} else {
+//					/*
+//					 * This blocks for up to 1s, after which SocketTimeoutException is thrown.
+//					 */
+//					Socket clientSocket = listenerSocket.accept();
+//
+//					//GOT A MESSAGE! <3
+//					clientMessage = MessageUtil.readMessage(clientSocket);
+//				}
+				if (shouldRead) {
 					/*
 					 * This blocks for up to 1s, after which SocketTimeoutException is thrown.
 					 */
 					Socket clientSocket = listenerSocket.accept();
-					
+
 					//GOT A MESSAGE! <3
 					clientMessage = MessageUtil.readMessage(clientSocket);
 				}
 				synchronized (AppConfig.colorLock) {
-					if (clientMessage.isWhite() == false && AppConfig.isWhite.get()) {
+					// Ovde pitati da li je kombinacija incijator/verzija poruke veca nego kombinacija koju mi imamo
+					boolean shouldEnter = false;
+					SnapshotID mySnapshotID = null;
+					for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
+						if (snapshotID.getVersion() > AppConfig.initiatorVersions.get(snapshotID.getInitId())) {
+							shouldEnter = true;
+							mySnapshotID = snapshotID;
+							break;
+						}
+					}
+					if (shouldEnter) {
+//					if (clientMessage.isWhite() == false && AppConfig.isWhite.get()) {
 						/*
 						 * If the message is red, we are white, and the message isn't a marker,
 						 * then store it. We will get the marker soon, and then we will process
@@ -89,7 +135,8 @@ public class SimpleServentListener implements Runnable, Cancellable {
 							LaiYangBitcakeManager lyFinancialManager =
 									(LaiYangBitcakeManager)snapshotCollector.getBitcakeManager();
 							lyFinancialManager.markerEvent(
-									Integer.parseInt(clientMessage.getMessageText()), snapshotCollector);
+									Integer.parseInt(clientMessage.getMessageText()), snapshotCollector,
+									mySnapshotID.getVersion());
 						}
 					}
 				}

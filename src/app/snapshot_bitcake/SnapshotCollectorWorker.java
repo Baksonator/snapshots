@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import app.AppConfig;
 
@@ -19,8 +20,11 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	private volatile boolean working = true;
 	
 	private AtomicBoolean collecting = new AtomicBoolean(false);
-	
+
+	/// Stavi da se pamte rezultati po verzijama, MOZDA
 	private Map<Integer, LYSnapshotResult> collectedLYValues = new ConcurrentHashMap<>();
+
+	private int mySnapshotVersion = 0;
 	
 	private BitcakeManager bitcakeManager;
 
@@ -59,9 +63,11 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			 * 2. Wait for all the responses
 			 * 3. Print result
 			 */
-			
+
 			//1 send asks
-			((LaiYangBitcakeManager)bitcakeManager).markerEvent(AppConfig.myServentInfo.getId(), this);
+			mySnapshotVersion++;
+			((LaiYangBitcakeManager)bitcakeManager).markerEvent(AppConfig.myServentInfo.getId(), this,
+					mySnapshotVersion);
 			
 			//2 wait for responses or finish
 			boolean waiting = true;
@@ -124,6 +130,11 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	
 	@Override
 	public void startCollecting() {
+		if (!AppConfig.myServentInfo.isInitiator()) {
+			AppConfig.timestampedErrorPrint("Tried to collect snapshot from non-initiator node");
+			return;
+		}
+
 		boolean oldValue = this.collecting.getAndSet(true);
 		
 		if (oldValue == true) {
@@ -136,4 +147,8 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 		working = false;
 	}
 
+	@Override
+	public int getMySnapshotVersion() {
+		return mySnapshotVersion;
+	}
 }
