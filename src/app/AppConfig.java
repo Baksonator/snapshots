@@ -35,8 +35,7 @@ public class AppConfig {
 	public static boolean IS_CLIQUE;
 
 	public static Map<Integer, Integer> initiatorVersions = new ConcurrentHashMap<>();
-	public static AtomicBoolean isWhite = new AtomicBoolean(true);
-	public static Object colorLock = new Object();
+	public static Object versionLock = new Object();
 	
 	/**
 	 * Print a message to stdout with a timestamp

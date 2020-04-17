@@ -24,7 +24,6 @@ public class BasicMessage implements Message {
 	private final ServentInfo receiverInfo;
 	private final List<ServentInfo> routeList;
 	private final String messageText;
-	private final boolean white;
 	private final List<SnapshotID> snapshotIDS;
 	
 	//This gives us a unique id - incremented in every natural constructor.
@@ -35,7 +34,6 @@ public class BasicMessage implements Message {
 		this.type = type;
 		this.originalSenderInfo = originalSenderInfo;
 		this.receiverInfo = receiverInfo;
-		this.white = AppConfig.isWhite.get();
 		this.routeList = new ArrayList<>();
 		this.messageText = "";
 		this.snapshotIDS = new ArrayList<>();
@@ -48,7 +46,6 @@ public class BasicMessage implements Message {
 		this.type = type;
 		this.originalSenderInfo = originalSenderInfo;
 		this.receiverInfo = receiverInfo;
-		this.white = AppConfig.isWhite.get();
 		this.routeList = new ArrayList<>();
 		this.messageText = messageText;
 		this.snapshotIDS = new ArrayList<>();
@@ -61,7 +58,6 @@ public class BasicMessage implements Message {
 		this.type = type;
 		this.originalSenderInfo = originalSenderInfo;
 		this.receiverInfo = receiverInfo;
-		this.white = AppConfig.isWhite.get();
 		this.routeList = new ArrayList<>();
 		this.messageText = messageText;
 		this.snapshotIDS = snapshotIDS;
@@ -85,11 +81,6 @@ public class BasicMessage implements Message {
 	}
 	
 	@Override
-	public boolean isWhite() {
-		return white;
-	}
-	
-	@Override
 	public List<ServentInfo> getRoute() {
 		return routeList;
 	}
@@ -108,11 +99,10 @@ public class BasicMessage implements Message {
 	}
 	
 	protected BasicMessage(MessageType type, ServentInfo originalSenderInfo, ServentInfo receiverInfo,
-			boolean white, List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS, int messageId) {
+						   List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS, int messageId) {
 		this.type = type;
 		this.originalSenderInfo = originalSenderInfo;
 		this.receiverInfo = receiverInfo;
-		this.white = white;
 		this.routeList = routeList;
 		this.messageText = messageText;
 		this.snapshotIDS = snapshotIDS;
@@ -132,7 +122,7 @@ public class BasicMessage implements Message {
 		List<ServentInfo> newRouteList = new ArrayList<>(routeList);
 		newRouteList.add(newRouteItem);
 		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-				getReceiverInfo(), isWhite(), newRouteList, getMessageText(), getSnapshotIDS(), getMessageId());
+				getReceiverInfo(), newRouteList, getMessageText(), getSnapshotIDS(), getMessageId());
 		
 		return toReturn;
 	}
@@ -147,7 +137,7 @@ public class BasicMessage implements Message {
 			ServentInfo newReceiverInfo = AppConfig.getInfoById(newReceiverId);
 			
 			Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-					newReceiverInfo, isWhite(), getRoute(), getMessageText(), getSnapshotIDS(), getMessageId());
+					newReceiverInfo, getRoute(), getMessageText(), getSnapshotIDS(), getMessageId());
 			
 			return toReturn;
 		} else {
@@ -157,29 +147,13 @@ public class BasicMessage implements Message {
 		}
 		
 	}
-	
-	@Override
-	public Message setRedColor() {
-		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-				getReceiverInfo(), false, getRoute(), getMessageText(), getSnapshotIDS(),  getMessageId());
-		
-		return toReturn;
-	}
-	
-	@Override
-	public Message setWhiteColor() {
-		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-				getReceiverInfo(), true, getRoute(), getMessageText(), getSnapshotIDS(), getMessageId());
-		
-		return toReturn;
-	}
 
 	@Override
 	public Message setSnapshotIDS() {
 		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
 
 		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
-				getReceiverInfo(), isWhite(), getRoute(), getMessageText(), snapshotIDS, getMessageId());
+				getReceiverInfo(), getRoute(), getMessageText(), snapshotIDS, getMessageId());
 
 		return toReturn;
 	}

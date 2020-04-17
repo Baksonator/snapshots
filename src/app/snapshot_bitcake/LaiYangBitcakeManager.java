@@ -52,12 +52,11 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 	public int recordedAmount = 0;
 	
 	public void markerEvent(int collectorId, SnapshotCollector snapshotCollector, int version) {
-		synchronized (AppConfig.colorLock) {
+		synchronized (AppConfig.versionLock) {
 			int oldVersion = AppConfig.initiatorVersions.get(collectorId);
 			AppConfig.initiatorVersions.put(collectorId, version);
 			initMapForSnapshot(collectorId, AppConfig.initiatorVersions.get(collectorId));
 
-			AppConfig.isWhite.set(false);
 			recordedAmount = getCurrentBitcakeAmount();
 
 			LYSnapshotResult snapshotResult = new LYSnapshotResult(

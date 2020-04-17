@@ -51,12 +51,6 @@ public interface Message extends Serializable {
 	ServentInfo getReceiverInfo();
 	
 	/**
-	 * Message color - white means that the message was sent before a local snapshot
-	 * was created, and red (non-white) means it is after.
-	 */
-	boolean isWhite();
-	
-	/**
 	 * Message type. Mainly used to decide which handler will work on this message.
 	 */
 	MessageType getMessageType();
@@ -88,18 +82,6 @@ public interface Message extends Serializable {
 	 * the receiver being changed to the one with the specified <code>id</code>.
 	 */
 	Message changeReceiver(Integer newReceiverId);
-	
-	/**
-	 * Alters the message and returns a new copy with everything intact, except
-	 * the color being changed to red.
-	 */
-	Message setRedColor();
-	
-	/**
-	 * Alters the message and returns a new copy with everything intact, except
-	 * the color being changed to white.
-	 */
-	Message setWhiteColor();
 
 	/**
 	 * Alters the message and returns a new copy with everything intact, execpt

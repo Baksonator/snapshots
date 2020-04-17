@@ -31,7 +31,7 @@ public class TransactionHandler implements MessageHandler {
 			}
 			
 			bitcakeManager.addSomeBitcakes(amountNumber);
-			synchronized (AppConfig.colorLock) {
+			synchronized (AppConfig.versionLock) {
 				if (bitcakeManager instanceof LaiYangBitcakeManager) {
 //				if (bitcakeManager instanceof LaiYangBitcakeManager && clientMessage.isWhite()) {
 					LaiYangBitcakeManager lyFinancialManager = (LaiYangBitcakeManager)bitcakeManager;

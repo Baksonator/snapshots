@@ -49,7 +49,7 @@ public class DelayedMessageSender implements Runnable {
 			 * All messages that declare their own stuff (eg. LYTellMessage) will have
 			 * to override setRedColor() because of this.
 			 */
-			synchronized (AppConfig.colorLock) {
+			synchronized (AppConfig.versionLock) {
 				messageToSend = messageToSend.setSnapshotIDS();
 
 //				messageToSend.sendEffect();

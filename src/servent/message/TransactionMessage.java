@@ -53,9 +53,9 @@ public class TransactionMessage extends BasicMessage {
 	}
 
 	private TransactionMessage(MessageType messageType, ServentInfo sender, ServentInfo receiver,
-							   boolean white, List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS,
+							   List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS,
 							   int messageId, BitcakeManager bitcakeManager) {
-		super(messageType, sender, receiver, white, routeList, messageText, snapshotIDS, messageId);
+		super(messageType, sender, receiver, routeList, messageText, snapshotIDS, messageId);
 		this.bitcakeManager = bitcakeManager;
 	}
 
@@ -64,7 +64,7 @@ public class TransactionMessage extends BasicMessage {
 		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
 
 		Message toReturn = new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
-				isWhite(), getRoute(), getMessageText(), snapshotIDS, getMessageId(), getBitcakeManager());
+				getRoute(), getMessageText(), snapshotIDS, getMessageId(), getBitcakeManager());
 
 		return toReturn;
 	}

@@ -20,7 +20,6 @@ import servent.handler.TransactionHandler;
 import servent.handler.snapshot.LYMarkerHandler;
 import servent.handler.snapshot.LYTellHandler;
 import servent.message.Message;
-import servent.message.MessageType;
 import servent.message.util.MessageUtil;
 
 public class SimpleServentListener implements Runnable, Cancellable {
@@ -66,7 +65,7 @@ public class SimpleServentListener implements Runnable, Cancellable {
 				//GOT A MESSAGE! <3
 				clientMessage = MessageUtil.readMessage(clientSocket);
 
-				synchronized (AppConfig.colorLock) {
+				synchronized (AppConfig.versionLock) {
 					for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
 						if (snapshotID.getVersion() > AppConfig.initiatorVersions.get(snapshotID.getInitId())) {
 							LaiYangBitcakeManager lyFinancialManager =

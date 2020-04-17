@@ -24,9 +24,9 @@ public class LYTellMessage extends BasicMessage {
 	}
 	
 	private LYTellMessage(MessageType messageType, ServentInfo sender, ServentInfo receiver,
-						  boolean white, List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS,
+						  List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS,
 						  int messageId, LYSnapshotResult lySnapshotResult) {
-		super(messageType, sender, receiver, white, routeList, messageText, snapshotIDS, messageId);
+		super(messageType, sender, receiver, routeList, messageText, snapshotIDS, messageId);
 		this.lySnapshotResult = lySnapshotResult;
 	}
 
@@ -35,18 +35,11 @@ public class LYTellMessage extends BasicMessage {
 	}
 
 	@Override
-	public Message setRedColor() {
-		Message toReturn = new LYTellMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
-				false, getRoute(), getMessageText(), getSnapshotIDS(), getMessageId(), getLYSnapshotResult());
-		return toReturn;
-	}
-
-	@Override
 	public Message setSnapshotIDS() {
 		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
 
 		Message toReturn = new LYTellMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
-				isWhite(), getRoute(), getMessageText(), snapshotIDS, getMessageId(), getLYSnapshotResult());
+				getRoute(), getMessageText(), snapshotIDS, getMessageId(), getLYSnapshotResult());
 
 		return toReturn;
 	}
