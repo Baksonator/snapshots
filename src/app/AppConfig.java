@@ -1,5 +1,6 @@
 package app;
 
+import app.snapshot_bitcake.LYSnapshotResult;
 import app.snapshot_bitcake.SnapshotID;
 
 import java.io.File;
@@ -8,8 +9,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -34,8 +36,10 @@ public class AppConfig {
 	 */
 	public static boolean IS_CLIQUE;
 
-	// TODO Dodati AtomicInteger za region, kao i AtomicInteger za parent-a u stablu
-	// Takodje dodati decu u stablu, i neki isLeaf tipa
+	public static AtomicInteger region = new AtomicInteger(-1);
+	public static AtomicInteger treeParent = new AtomicInteger(-1);
+	public static BlockingQueue<Integer> neighborResponses = new LinkedBlockingDeque<>();
+	public static BlockingQueue<List<LYSnapshotResult>> childrenResponses = new LinkedBlockingQueue<>();
 	public static Map<Integer, Integer> initiatorVersions = new ConcurrentHashMap<>();
 	public static Object versionLock = new Object();
 	

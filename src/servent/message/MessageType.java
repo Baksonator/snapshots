@@ -1,5 +1,5 @@
 package servent.message;
 
 public enum MessageType {
-	TRANSACTION, LY_MARKER, LY_TELL
+	TRANSACTION, LY_MARKER, LY_TELL, LY_MARKER_RESPONSE
 }

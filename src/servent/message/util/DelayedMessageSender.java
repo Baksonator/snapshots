@@ -7,6 +7,7 @@ import java.net.Socket;
 import app.AppConfig;
 import app.ServentInfo;
 import servent.message.Message;
+import servent.message.MessageType;
 
 /**
  * This worker sends a message asynchronously. Doing this in a separate thread
@@ -50,7 +51,9 @@ public class DelayedMessageSender implements Runnable {
 			 * to override setRedColor() because of this.
 			 */
 			synchronized (AppConfig.versionLock) {
-				messageToSend = messageToSend.setSnapshotIDS();
+				if (messageToSend.getMessageType() != MessageType.LY_TELL) {
+					messageToSend = messageToSend.setSnapshotIDS();
+				}
 
 //				messageToSend.sendEffect();
 

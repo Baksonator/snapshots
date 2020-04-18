@@ -2,6 +2,7 @@ package app.snapshot_bitcake;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,6 +24,7 @@ public class LYSnapshotResult implements Serializable {
 	private final int recordedAmount;
 	private final Map<Integer, Integer> giveHistory;
 	private final Map<Integer, Integer> getHistory;
+	private Set<Integer> neighboringRegions;
 	
 	public LYSnapshotResult(int serventId, int recordedAmount,
 			Map<Integer, Integer> giveHistory, Map<Integer, Integer> getHistory) {
@@ -43,4 +45,6 @@ public class LYSnapshotResult implements Serializable {
 	public Map<Integer, Integer> getGetHistory() {
 		return getHistory;
 	}
+	public Set<Integer> getNeighboringRegions() { return neighboringRegions; }
+	public void setNeighboringRegions(Set<Integer> neighboringRegions) { this.neighboringRegions = neighboringRegions; }
 }

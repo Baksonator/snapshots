@@ -65,7 +65,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			//1 send asks
 			mySnapshotVersion++;
 			((LaiYangBitcakeManager)bitcakeManager).markerEvent(AppConfig.myServentInfo.getId(), this,
-					mySnapshotVersion);
+					mySnapshotVersion, -1);
 
 			// TODO Ovde treba izmeniti celu logiku, mora da ceka da mu sva deca odgovore, probaj da ukombinujes sa
 			// ovime sto ce biti u markerEvent

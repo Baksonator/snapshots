@@ -1,14 +1,19 @@
 package app.snapshot_bitcake;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 
 import app.AppConfig;
 import servent.message.Message;
 import servent.message.snapshot.LYMarkerMessage;
+import servent.message.snapshot.LYMarkerResponse;
 import servent.message.snapshot.LYTellMessage;
+import servent.message.util.ChildResultCollector;
 import servent.message.util.MessageUtil;
 
 public class LaiYangBitcakeManager implements BitcakeManager {
@@ -50,11 +55,14 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 	 */
 	public int recordedAmount = 0;
 	
-	public void markerEvent(int collectorId, SnapshotCollector snapshotCollector, int version) {
+	public void markerEvent(int collectorId, SnapshotCollector snapshotCollector, int version, int parent) {
 		synchronized (AppConfig.versionLock) {
 			int oldVersion = AppConfig.initiatorVersions.get(collectorId);
 			AppConfig.initiatorVersions.put(collectorId, version);
 			initMapForSnapshot(collectorId, AppConfig.initiatorVersions.get(collectorId));
+
+//			AppConfig.region.set(collectorId);
+			AppConfig.treeParent.set(parent);
 
 			recordedAmount = getCurrentBitcakeAmount();
 
@@ -65,9 +73,6 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			LYSnapshotResult snapshotResult1 = new LYSnapshotResult(
 					AppConfig.myServentInfo.getId(), recordedAmount, giveHistories.get(new SnapshotID(collectorId, oldVersion)),
 					getHistories.get(new SnapshotID(collectorId, oldVersion)));
-
-			AppConfig.timestampedStandardPrint(giveHistories.get(new SnapshotID(collectorId, oldVersion)).toString());
-			AppConfig.timestampedStandardPrint(getHistories.get(new SnapshotID(collectorId, oldVersion)).toString());
 			
 			if (collectorId == AppConfig.myServentInfo.getId()) {
 				snapshotCollector.addLYSnapshotInfo(
@@ -78,19 +83,38 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 				// TODO Morace da se salje ne direktno inicijatoru, vec uz stablo
 				// Ovaj ce biti u novom thread-u, objasnjenom dole
 				// U konstruktoru treba staviti i eventualne susedne regione, koji jos nisu podrzani, ali bice
-				Message tellMessage = new LYTellMessage(
-						AppConfig.myServentInfo, AppConfig.getInfoById(collectorId), snapshotResult1);
-				
-				MessageUtil.sendMessage(tellMessage);
+//				Message tellMessage = new LYTellMessage(
+//						AppConfig.myServentInfo, AppConfig.getInfoById(collectorId), snapshotResult1);
+//				List<LYSnapshotResult> snapshotResultList = new ArrayList<>();
+//				snapshotResultList.add(snapshotResult1);
+//				Message tellMessage = new LYTellMessage(
+//						AppConfig.myServentInfo, AppConfig.getInfoById(parent), snapshotResultList);
+//
+//				MessageUtil.sendMessage(tellMessage);\
+				Thread helper = new Thread(new ChildResultCollector(AppConfig.myServentInfo.getNeighbors().size(),
+						snapshotResult1, parent));
+				helper.start();
 			}
-			
+
 			for (Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
 				// TODO Kreirati novi thread koji ce da ceka odgovore od suseda, to ce biti ili da su
 				// u drugom regionu, ili da vec imaju parent-a ili da nemaju parent-a.
 				// Celu logiku sta se desava u kojoj situaciji stavi tamo
 				// Takodje, staviti sebe u rutu zbog kreiranja stabla
-				Message clMarker = new LYMarkerMessage(AppConfig.myServentInfo, AppConfig.getInfoById(neighbor), collectorId);
+				Message clMarker = new LYMarkerMessage(AppConfig.myServentInfo, AppConfig.getInfoById(neighbor),
+						collectorId).makeMeASender();
 				MessageUtil.sendMessage(clMarker);
+
+				if (neighbor == parent && parent != collectorId) {
+					LYMarkerResponse lyMarkerResponse = new LYMarkerResponse(AppConfig.myServentInfo,
+							AppConfig.getInfoById(neighbor), -1);
+					MessageUtil.sendMessage(lyMarkerResponse);
+				} else {
+					Message lyMarkerResponse = new LYMarkerResponse(AppConfig.myServentInfo,
+							AppConfig.getInfoById(neighbor), -2) {
+					}.makeMeASender();
+					MessageUtil.sendMessage(lyMarkerResponse);
+				}
 //				try {
 //					/*
 //					 * This sleep is here to artificially produce some white node -> red node messages.

@@ -7,6 +7,7 @@ import app.snapshot_bitcake.LYSnapshotResult;
 import app.snapshot_bitcake.LaiYangBitcakeManager;
 import app.snapshot_bitcake.SnapshotID;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +66,18 @@ public class TransactionMessage extends BasicMessage {
 
 		Message toReturn = new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
 				getRoute(), getMessageText(), snapshotIDS, getMessageId(), getBitcakeManager());
+
+		return toReturn;
+	}
+
+	@Override
+	public Message makeMeASender() {
+		ServentInfo newRouteItem = AppConfig.myServentInfo;
+
+		List<ServentInfo> newRouteList = new ArrayList<>(getRoute());
+		newRouteList.add(newRouteItem);
+		Message toReturn = new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
+				newRouteList, getMessageText(), getSnapshotIDS(), getMessageId(), getBitcakeManager());
 
 		return toReturn;
 	}

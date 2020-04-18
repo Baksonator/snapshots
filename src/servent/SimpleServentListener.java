@@ -18,8 +18,10 @@ import servent.handler.MessageHandler;
 import servent.handler.NullHandler;
 import servent.handler.TransactionHandler;
 import servent.handler.snapshot.LYMarkerHandler;
+import servent.handler.snapshot.LYMarkerResponseHandler;
 import servent.handler.snapshot.LYTellHandler;
 import servent.message.Message;
+import servent.message.snapshot.LYMarkerResponse;
 import servent.message.util.MessageUtil;
 
 public class SimpleServentListener implements Runnable, Cancellable {
@@ -75,7 +77,8 @@ public class SimpleServentListener implements Runnable, Cancellable {
 									(LaiYangBitcakeManager)snapshotCollector.getBitcakeManager();
 							lyFinancialManager.markerEvent(
 									snapshotID.getInitId(), snapshotCollector,
-									snapshotID.getVersion());
+									snapshotID.getVersion(),
+									clientMessage.getRoute().get(clientMessage.getRoute().size() - 1).getId());
 							break;
 						}
 					}
@@ -89,14 +92,18 @@ public class SimpleServentListener implements Runnable, Cancellable {
 				 * because that way is much simpler and less error prone.
 				 */
 				switch (clientMessage.getMessageType()) {
-				case TRANSACTION:
-					messageHandler = new TransactionHandler(clientMessage, snapshotCollector.getBitcakeManager());
-					break;
-				case LY_MARKER:
-					messageHandler = new LYMarkerHandler();
-					break;
-				case LY_TELL:
-					messageHandler = new LYTellHandler(clientMessage, snapshotCollector);
+					case TRANSACTION:
+						messageHandler = new TransactionHandler(clientMessage, snapshotCollector.getBitcakeManager());
+						break;
+					case LY_MARKER:
+						messageHandler = new LYMarkerHandler();
+						break;
+					case LY_TELL:
+						messageHandler = new LYTellHandler(clientMessage, snapshotCollector);
+						break;
+					case LY_MARKER_RESPONSE:
+						messageHandler = new LYMarkerResponseHandler(clientMessage);
+						break;
 				}
 				
 				threadPool.submit(messageHandler);
