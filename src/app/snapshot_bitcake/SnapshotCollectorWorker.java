@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import app.AppConfig;
 
@@ -19,13 +18,13 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 	private volatile boolean working = true;
 	
-	private AtomicBoolean collecting = new AtomicBoolean(false);
+	private final AtomicBoolean collecting = new AtomicBoolean(false);
 
-	private Map<Integer, LYSnapshotResult> collectedLYValues = new ConcurrentHashMap<>();
+	private final Map<Integer, LYSnapshotResult> collectedLYValues = new ConcurrentHashMap<>();
 
 	private int mySnapshotVersion = 0;
 	
-	private BitcakeManager bitcakeManager;
+	private final BitcakeManager bitcakeManager;
 
 	public SnapshotCollectorWorker() {
 		bitcakeManager = new LaiYangBitcakeManager();
@@ -43,14 +42,14 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			/*
 			 * Not collecting yet - just sleep until we start actual work, or finish
 			 */
-			while (collecting.get() == false) {
+			while (!collecting.get()) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				
-				if (working == false) {
+				if (!working) {
 					return;
 				}
 			}
@@ -84,7 +83,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 					e.printStackTrace();
 				}
 				
-				if (working == false) {
+				if (!working) {
 					return;
 				}
 			}
@@ -139,7 +138,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 		boolean oldValue = this.collecting.getAndSet(true);
 		
-		if (oldValue == true) {
+		if (oldValue) {
 			AppConfig.timestampedErrorPrint("Tried to start collecting before finished with previous.");
 		}
 	}

@@ -53,17 +53,17 @@ public class BasicMessage implements Message {
 		this.messageId = messageCounter.getAndIncrement();
 	}
 
-	public BasicMessage(MessageType type, ServentInfo originalSenderInfo, ServentInfo receiverInfo,
-						String messageText, List<SnapshotID> snapshotIDS) {
-		this.type = type;
-		this.originalSenderInfo = originalSenderInfo;
-		this.receiverInfo = receiverInfo;
-		this.routeList = new ArrayList<>();
-		this.messageText = messageText;
-		this.snapshotIDS = snapshotIDS;
-
-		this.messageId = messageCounter.getAndIncrement();
-	}
+//	public BasicMessage(MessageType type, ServentInfo originalSenderInfo, ServentInfo receiverInfo,
+//						String messageText, List<SnapshotID> snapshotIDS) {
+//		this.type = type;
+//		this.originalSenderInfo = originalSenderInfo;
+//		this.receiverInfo = receiverInfo;
+//		this.routeList = new ArrayList<>();
+//		this.messageText = messageText;
+//		this.snapshotIDS = snapshotIDS;
+//
+//		this.messageId = messageCounter.getAndIncrement();
+//	}
 	
 	@Override
 	public MessageType getMessageType() {
@@ -121,10 +121,9 @@ public class BasicMessage implements Message {
 		
 		List<ServentInfo> newRouteList = new ArrayList<>(routeList);
 		newRouteList.add(newRouteItem);
-		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
+
+		return new BasicMessage(getMessageType(), getOriginalSenderInfo(),
 				getReceiverInfo(), newRouteList, getMessageText(), getSnapshotIDS(), getMessageId());
-		
-		return toReturn;
 	}
 	
 	/**
@@ -135,11 +134,9 @@ public class BasicMessage implements Message {
 	public Message changeReceiver(Integer newReceiverId) {
 		if (AppConfig.myServentInfo.getNeighbors().contains(newReceiverId)) {
 			ServentInfo newReceiverInfo = AppConfig.getInfoById(newReceiverId);
-			
-			Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
+
+			return new BasicMessage(getMessageType(), getOriginalSenderInfo(),
 					newReceiverInfo, getRoute(), getMessageText(), getSnapshotIDS(), getMessageId());
-			
-			return toReturn;
 		} else {
 			AppConfig.timestampedErrorPrint("Trying to make a message for " + newReceiverId + " who is not a neighbor.");
 			
@@ -152,10 +149,8 @@ public class BasicMessage implements Message {
 	public Message setSnapshotIDS() {
 		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
 
-		Message toReturn = new BasicMessage(getMessageType(), getOriginalSenderInfo(),
+		return new BasicMessage(getMessageType(), getOriginalSenderInfo(),
 				getReceiverInfo(), getRoute(), getMessageText(), snapshotIDS, getMessageId());
-
-		return toReturn;
 	}
 
 	/**
@@ -165,11 +160,9 @@ public class BasicMessage implements Message {
 	public boolean equals(Object obj) {
 		if (obj instanceof BasicMessage) {
 			BasicMessage other = (BasicMessage)obj;
-			
-			if (getMessageId() == other.getMessageId() &&
-				getOriginalSenderInfo().getId() == other.getOriginalSenderInfo().getId()) {
-				return true;
-			}
+
+			return getMessageId() == other.getMessageId() &&
+					getOriginalSenderInfo().getId() == other.getOriginalSenderInfo().getId();
 		}
 		
 		return false;

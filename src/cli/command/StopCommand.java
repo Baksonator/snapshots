@@ -7,9 +7,9 @@ import servent.SimpleServentListener;
 
 public class StopCommand implements CLICommand {
 
-	private CLIParser parser;
-	private SimpleServentListener listener;
-	private SnapshotCollector snapshotCollector;
+	private final CLIParser parser;
+	private final SimpleServentListener listener;
+	private final SnapshotCollector snapshotCollector;
 	
 	public StopCommand(CLIParser parser, SimpleServentListener listener,
 			SnapshotCollector snapshotCollector) {

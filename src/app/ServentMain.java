@@ -23,7 +23,7 @@ public class ServentMain {
 		}
 		
 		int serventId = -1;
-		int portNumber = -1;
+		int portNumber;
 		
 		String serventListFile = args[0];
 		

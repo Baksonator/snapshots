@@ -1,13 +1,9 @@
 package servent.message.snapshot;
 
-import app.AppConfig;
 import app.ServentInfo;
 import servent.message.BasicMessage;
-import servent.message.Message;
 import servent.message.MessageType;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class LYMarkerResponse extends BasicMessage {
 

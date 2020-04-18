@@ -3,7 +3,6 @@ package servent.message;
 import app.AppConfig;
 import app.ServentInfo;
 import app.snapshot_bitcake.BitcakeManager;
-import app.snapshot_bitcake.LYSnapshotResult;
 import app.snapshot_bitcake.LaiYangBitcakeManager;
 import app.snapshot_bitcake.SnapshotID;
 
@@ -20,7 +19,7 @@ public class TransactionMessage extends BasicMessage {
 
 	private static final long serialVersionUID = -333251402058492901L;
 
-	private transient BitcakeManager bitcakeManager;
+	private final transient BitcakeManager bitcakeManager;
 
 	public TransactionMessage(ServentInfo sender, ServentInfo receiver, int amount, BitcakeManager bitcakeManager) {
 		super(MessageType.TRANSACTION, sender, receiver, String.valueOf(amount));
@@ -38,10 +37,9 @@ public class TransactionMessage extends BasicMessage {
 
 		bitcakeManager.takeSomeBitcakes(amount);
 		if (bitcakeManager instanceof LaiYangBitcakeManager) {
-//		if (bitcakeManager instanceof LaiYangBitcakeManager && isWhite()) {
 			LaiYangBitcakeManager lyBitcakeManager = (LaiYangBitcakeManager)bitcakeManager;
 			
-			lyBitcakeManager.recordGiveTransaction(getReceiverInfo().getId(), amount);
+//			lyBitcakeManager.recordGiveTransaction(getReceiverInfo().getId(), amount);
 			for (SnapshotID snapshotID : getSnapshotIDS()) {
 				lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
 						amount);
@@ -64,10 +62,8 @@ public class TransactionMessage extends BasicMessage {
 	public Message setSnapshotIDS() {
 		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
 
-		Message toReturn = new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
+		return new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
 				getRoute(), getMessageText(), snapshotIDS, getMessageId(), getBitcakeManager());
-
-		return toReturn;
 	}
 
 	@Override
@@ -76,9 +72,8 @@ public class TransactionMessage extends BasicMessage {
 
 		List<ServentInfo> newRouteList = new ArrayList<>(getRoute());
 		newRouteList.add(newRouteItem);
-		Message toReturn = new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
-				newRouteList, getMessageText(), getSnapshotIDS(), getMessageId(), getBitcakeManager());
 
-		return toReturn;
+		return new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
+				newRouteList, getMessageText(), getSnapshotIDS(), getMessageId(), getBitcakeManager());
 	}
 }

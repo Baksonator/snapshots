@@ -11,8 +11,8 @@ import servent.message.util.MessageUtil;
 
 public class LYTellHandler implements MessageHandler {
 
-	private Message clientMessage;
-	private SnapshotCollector snapshotCollector;
+	private final Message clientMessage;
+	private final SnapshotCollector snapshotCollector;
 	
 	public LYTellHandler(Message clientMessage, SnapshotCollector snapshotCollector) {
 		this.clientMessage = clientMessage;

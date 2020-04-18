@@ -59,11 +59,11 @@ public class CLIParser implements Runnable, Cancellable {
 			
 			int spacePos = commandLine.indexOf(" ");
 			
-			String commandName = null;
+			String commandName;
 			String commandArgs = null;
 			if (spacePos != -1) {
 				commandName = commandLine.substring(0, spacePos);
-				commandArgs = commandLine.substring(spacePos+1, commandLine.length());
+				commandArgs = commandLine.substring(spacePos+1);
 			} else {
 				commandName = commandLine;
 			}

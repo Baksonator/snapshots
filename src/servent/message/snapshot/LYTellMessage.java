@@ -43,4 +43,6 @@ public class LYTellMessage extends BasicMessage {
 
 		return toReturn;
 	}
+
+	// TODO Napravi i da ovde imas makeMeASender, trebace za raspustanje stabla
 }

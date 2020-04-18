@@ -18,7 +18,7 @@ public class TransactionBurstCommand implements CLICommand {
 //	private static final int BURST_WORKERS = 5;
 //	private static final int MAX_TRANSFER_AMOUNT = 10;
 	
-	private BitcakeManager bitcakeManager;
+	private final BitcakeManager bitcakeManager;
 	
 	public TransactionBurstCommand(BitcakeManager bitcakeManager) {
 		this.bitcakeManager = bitcakeManager;

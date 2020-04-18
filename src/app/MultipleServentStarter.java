@@ -30,7 +30,7 @@ public class MultipleServentStarter {
 	 */
 	private static class ServentCLI implements Runnable {
 		
-		private List<Process> serventProcesses;
+		private final List<Process> serventProcesses;
 		
 		public ServentCLI(List<Process> serventProcesses) {
 			this.serventProcesses = serventProcesses;

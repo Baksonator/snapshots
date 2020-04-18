@@ -1,10 +1,7 @@
 package app.snapshot_bitcake;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 
@@ -12,7 +9,6 @@ import app.AppConfig;
 import servent.message.Message;
 import servent.message.snapshot.LYMarkerMessage;
 import servent.message.snapshot.LYMarkerResponse;
-import servent.message.snapshot.LYTellMessage;
 import servent.message.util.ChildResultCollector;
 import servent.message.util.MessageUtil;
 
@@ -32,11 +28,11 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 		return currentAmount.get();
 	}
 
-	private Map<Integer, Integer> giveHistory = new ConcurrentHashMap<>();
-	private Map<Integer, Integer> getHistory = new ConcurrentHashMap<>();
+	private final Map<Integer, Integer> giveHistory = new ConcurrentHashMap<>();
+	private final Map<Integer, Integer> getHistory = new ConcurrentHashMap<>();
 
-	private Map<SnapshotID, Map<Integer, Integer>> giveHistories = new ConcurrentHashMap<>();
-	private Map<SnapshotID, Map<Integer, Integer>> getHistories = new ConcurrentHashMap<>();
+	private final Map<SnapshotID, Map<Integer, Integer>> giveHistories = new ConcurrentHashMap<>();
+	private final Map<SnapshotID, Map<Integer, Integer>> getHistories = new ConcurrentHashMap<>();
 	
 	public LaiYangBitcakeManager() {
 		for(Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
@@ -66,10 +62,9 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 
 			recordedAmount = getCurrentBitcakeAmount();
 
-			LYSnapshotResult snapshotResult = new LYSnapshotResult(
-					AppConfig.myServentInfo.getId(), recordedAmount, giveHistory, getHistory);
+//			LYSnapshotResult snapshotResult = new LYSnapshotResult(
+//					AppConfig.myServentInfo.getId(), recordedAmount, giveHistory, getHistory);
 
-			// TODO Mora da se salje ne samo oldVersion, nego sve verzije izmedju version i oldVersion
 			LYSnapshotResult snapshotResult1 = new LYSnapshotResult(
 					AppConfig.myServentInfo.getId(), recordedAmount, giveHistories.get(new SnapshotID(collectorId, oldVersion)),
 					getHistories.get(new SnapshotID(collectorId, oldVersion)));
@@ -79,28 +74,12 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 						AppConfig.myServentInfo.getId(),
 						snapshotResult1);
 			} else {
-
-				// TODO Morace da se salje ne direktno inicijatoru, vec uz stablo
-				// Ovaj ce biti u novom thread-u, objasnjenom dole
-				// U konstruktoru treba staviti i eventualne susedne regione, koji jos nisu podrzani, ali bice
-//				Message tellMessage = new LYTellMessage(
-//						AppConfig.myServentInfo, AppConfig.getInfoById(collectorId), snapshotResult1);
-//				List<LYSnapshotResult> snapshotResultList = new ArrayList<>();
-//				snapshotResultList.add(snapshotResult1);
-//				Message tellMessage = new LYTellMessage(
-//						AppConfig.myServentInfo, AppConfig.getInfoById(parent), snapshotResultList);
-//
-//				MessageUtil.sendMessage(tellMessage);\
 				Thread helper = new Thread(new ChildResultCollector(AppConfig.myServentInfo.getNeighbors().size(),
 						snapshotResult1, parent));
 				helper.start();
 			}
 
 			for (Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
-				// TODO Kreirati novi thread koji ce da ceka odgovore od suseda, to ce biti ili da su
-				// u drugom regionu, ili da vec imaju parent-a ili da nemaju parent-a.
-				// Celu logiku sta se desava u kojoj situaciji stavi tamo
-				// Takodje, staviti sebe u rutu zbog kreiranja stabla
 				Message clMarker = new LYMarkerMessage(AppConfig.myServentInfo, AppConfig.getInfoById(neighbor),
 						collectorId).makeMeASender();
 				MessageUtil.sendMessage(clMarker);
@@ -110,10 +89,13 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 							AppConfig.getInfoById(neighbor), -1);
 					MessageUtil.sendMessage(lyMarkerResponse);
 				} else {
+
 					Message lyMarkerResponse = new LYMarkerResponse(AppConfig.myServentInfo,
 							AppConfig.getInfoById(neighbor), -2) {
+						private static final long serialVersionUID = -269153763891389772L;
 					}.makeMeASender();
 					MessageUtil.sendMessage(lyMarkerResponse);
+
 				}
 //				try {
 //					/*
@@ -139,9 +121,9 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 		getHistories.put(new SnapshotID(initId, version), newGetMap);
 	}
 	
-	private class MapValueUpdater implements BiFunction<Integer, Integer, Integer> {
+	private static class MapValueUpdater implements BiFunction<Integer, Integer, Integer> {
 		
-		private int valueToAdd;
+		private final int valueToAdd;
 		
 		public MapValueUpdater(int valueToAdd) {
 			this.valueToAdd = valueToAdd;

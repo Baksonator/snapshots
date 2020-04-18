@@ -12,9 +12,9 @@ import java.util.Set;
 
 public class ChildResultCollector implements Runnable {
 
-    private int neighborCount;
-    private LYSnapshotResult myResult;
-    private int parent;
+    private final int neighborCount;
+    private final LYSnapshotResult myResult;
+    private final int parent;
 
     public ChildResultCollector(int neighborCount, LYSnapshotResult myResult, int parent) {
         this.neighborCount = neighborCount;

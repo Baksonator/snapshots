@@ -10,7 +10,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ public class AppConfig {
 	 */
 	public static ServentInfo myServentInfo;
 	
-	private static List<ServentInfo> serventInfoList = new ArrayList<>();
+	private static final List<ServentInfo> serventInfoList = new ArrayList<>();
 
 	public static List<Integer> initiatorIds = new ArrayList<>();
 
@@ -41,7 +40,7 @@ public class AppConfig {
 	public static BlockingQueue<Integer> neighborResponses = new LinkedBlockingDeque<>();
 	public static BlockingQueue<List<LYSnapshotResult>> childrenResponses = new LinkedBlockingQueue<>();
 	public static Map<Integer, Integer> initiatorVersions = new ConcurrentHashMap<>();
-	public static Object versionLock = new Object();
+	public static final Object versionLock = new Object();
 	
 	/**
 	 * Print a message to stdout with a timestamp
@@ -109,10 +108,10 @@ public class AppConfig {
 		}
 		
 		IS_CLIQUE = Boolean.parseBoolean(properties.getProperty("clique", "false"));
-		String snapshotType = properties.getProperty("snapshot");
-		if (snapshotType == null) {
-			snapshotType = "none";
-		}
+//		String snapshotType = properties.getProperty("snapshot");
+//		if (snapshotType == null) {
+//			snapshotType = "none";
+//		}
 
 		String[] initiators = properties.getProperty("initiators").split(",");
 		initiatorIds = Arrays.stream(initiators)

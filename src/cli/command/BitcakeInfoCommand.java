@@ -4,7 +4,7 @@ import app.snapshot_bitcake.SnapshotCollector;
 
 public class BitcakeInfoCommand implements CLICommand {
 
-	private SnapshotCollector collector;
+	private final SnapshotCollector collector;
 	
 	public BitcakeInfoCommand(SnapshotCollector collector) {
 		this.collector = collector;

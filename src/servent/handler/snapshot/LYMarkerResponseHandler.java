@@ -8,7 +8,7 @@ import servent.message.snapshot.LYMarkerResponse;
 
 public class LYMarkerResponseHandler implements MessageHandler {
 
-    private Message clientMessage;
+    private final Message clientMessage;
 
     public LYMarkerResponseHandler(Message clientMessage) {
         this.clientMessage = clientMessage;
