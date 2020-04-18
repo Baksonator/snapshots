@@ -48,7 +48,6 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 	 * This value is protected by AppConfig.colorLock.
 	 * Access it only if you have the blessing.
 	 */
-	// Pamtis posebnu verziju za ovo za svakog inicijatora posebno, MOZDA
 	public int recordedAmount = 0;
 	
 	public void markerEvent(int collectorId, SnapshotCollector snapshotCollector, int version) {
@@ -62,6 +61,7 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			LYSnapshotResult snapshotResult = new LYSnapshotResult(
 					AppConfig.myServentInfo.getId(), recordedAmount, giveHistory, getHistory);
 
+			// TODO Mora da se salje ne samo oldVersion, nego sve verzije izmedju version i oldVersion
 			LYSnapshotResult snapshotResult1 = new LYSnapshotResult(
 					AppConfig.myServentInfo.getId(), recordedAmount, giveHistories.get(new SnapshotID(collectorId, oldVersion)),
 					getHistories.get(new SnapshotID(collectorId, oldVersion)));
@@ -74,7 +74,10 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 						AppConfig.myServentInfo.getId(),
 						snapshotResult1);
 			} else {
-			
+
+				// TODO Morace da se salje ne direktno inicijatoru, vec uz stablo
+				// Ovaj ce biti u novom thread-u, objasnjenom dole
+				// U konstruktoru treba staviti i eventualne susedne regione, koji jos nisu podrzani, ali bice
 				Message tellMessage = new LYTellMessage(
 						AppConfig.myServentInfo, AppConfig.getInfoById(collectorId), snapshotResult1);
 				
@@ -82,6 +85,10 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			}
 			
 			for (Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
+				// TODO Kreirati novi thread koji ce da ceka odgovore od suseda, to ce biti ili da su
+				// u drugom regionu, ili da vec imaju parent-a ili da nemaju parent-a.
+				// Celu logiku sta se desava u kojoj situaciji stavi tamo
+				// Takodje, staviti sebe u rutu zbog kreiranja stabla
 				Message clMarker = new LYMarkerMessage(AppConfig.myServentInfo, AppConfig.getInfoById(neighbor), collectorId);
 				MessageUtil.sendMessage(clMarker);
 //				try {

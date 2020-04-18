@@ -15,6 +15,7 @@ public class LYTellMessage extends BasicMessage {
 
 	private static final long serialVersionUID = 3116394054726162318L;
 
+	// TODO Staviti da se prati i lista susednih regiona
 	private LYSnapshotResult lySnapshotResult;
 	
 	public LYTellMessage(ServentInfo sender, ServentInfo receiver, LYSnapshotResult lySnapshotResult) {

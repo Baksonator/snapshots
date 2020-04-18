@@ -34,6 +34,8 @@ public class AppConfig {
 	 */
 	public static boolean IS_CLIQUE;
 
+	// TODO Dodati AtomicInteger za region, kao i AtomicInteger za parent-a u stablu
+	// Takodje dodati decu u stablu, i neki isLeaf tipa
 	public static Map<Integer, Integer> initiatorVersions = new ConcurrentHashMap<>();
 	public static Object versionLock = new Object();
 	

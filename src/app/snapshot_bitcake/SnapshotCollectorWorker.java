@@ -21,7 +21,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	
 	private AtomicBoolean collecting = new AtomicBoolean(false);
 
-	/// Stavi da se pamte rezultati po verzijama, MOZDA
 	private Map<Integer, LYSnapshotResult> collectedLYValues = new ConcurrentHashMap<>();
 
 	private int mySnapshotVersion = 0;
@@ -48,7 +47,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -68,7 +66,11 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			mySnapshotVersion++;
 			((LaiYangBitcakeManager)bitcakeManager).markerEvent(AppConfig.myServentInfo.getId(), this,
 					mySnapshotVersion);
-			
+
+			// TODO Ovde treba izmeniti celu logiku, mora da ceka da mu sva deca odgovore, probaj da ukombinujes sa
+			// ovime sto ce biti u markerEvent
+			// Takodje, ispis ce biti drugaciji, jer na pocetku nece imati potpune informacije
+			// Kasnije mora da se implementira razmena po rundama
 			//2 wait for responses or finish
 			boolean waiting = true;
 			while (waiting) {

@@ -17,6 +17,11 @@ public class LYTellHandler implements MessageHandler {
 		this.snapshotCollector = snapshotCollector;
 	}
 
+	/**
+	 * TODO Izmeniti ponasanje ovoga, samo ako smo inicijator treba da zapisujemo, u suprotnom saljemo
+	 * poruku dalje, tj. prepustamo kontrolu threadu spomenutom u {@link app.snapshot_bitcake.LaiYangBitcakeManager}
+	 * Kada se kaze prepustamo kontrolu, tu tipa radimo upisivanje u neki blokirajuci red ili tako nesto
+	 */
 	@Override
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.LY_TELL) {
