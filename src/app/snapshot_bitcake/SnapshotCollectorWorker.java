@@ -6,6 +6,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import app.AppConfig;
+import servent.message.snapshot.LYSKNeighborNotifyMessage;
+import servent.message.snapshot.LYSKTreeNotifyMessage;
+import servent.message.util.MessageUtil;
 
 /**
  * Main snapshot collector class. Has support for Naive, Chandy-Lamport
@@ -96,12 +99,37 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			}
 
 			for (LYSnapshotResult lySnapshotResult : lySnapshotResults) {
+				neighobringRegions.addAll(lySnapshotResult.getNeighboringRegions());
 				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
 			}
 
-			// TODO citati susedne regione iz lySnapshotResults
-			// Takodje, ispis ce biti drugaciji, jer na pocetku nece imati potpune informacije
-			// Kasnije mora da se implementira razmena po rundama
+			// Exchange, for now everyone sends to everyone
+			// TODO Round exchange
+			neighobringRegions.remove(AppConfig.myServentInfo.getId());
+			int expectedReponses = neighobringRegions.size();
+
+			lySnapshotResults.add(collectedLYValues.get(AppConfig.myServentInfo.getId()));
+			for (Integer neighborInitiator : neighobringRegions) {
+				LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+						AppConfig.getInfoById(neighborInitiator), lySnapshotResults);
+
+				MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+			}
+
+			List<LYSnapshotResult> resultsFromNeighobrs = new ArrayList<>();
+			while (expectedReponses > 0) {
+				try {
+					resultsFromNeighobrs.addAll(AppConfig.regionResponses.take());
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				expectedReponses--;
+			}
+
+			for (LYSnapshotResult lySnapshotResult : resultsFromNeighobrs) {
+				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
+			}
+
 			//print
 			int sum;
 			sum = 0;
@@ -131,7 +159,24 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			}
 			
 			AppConfig.timestampedStandardPrint("System bitcake count: " + sum);
-			
+
+			List<Integer> initiators = new ArrayList<>(neighobringRegions);
+			for (int child : AppConfig.treeChildren) {
+				LYSKTreeNotifyMessage toSend = new LYSKTreeNotifyMessage(AppConfig.myServentInfo, AppConfig.getInfoById(child),
+						initiators);
+
+				MessageUtil.sendMessage(toSend);
+			}
+
+			for (int initiator : initiators) {
+				int oldVersion = AppConfig.initiatorVersions.get(initiator);
+				AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
+			}
+
+			AppConfig.region.set(-1);
+			AppConfig.treeParent.set(-1);
+			AppConfig.treeChildren.clear();
+
 			collectedLYValues.clear(); //reset for next invocation
 			collecting.set(false);
 		}

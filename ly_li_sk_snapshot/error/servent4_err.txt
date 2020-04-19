@@ -1,0 +1,500 @@
+Exception in thread "Thread-46" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-34" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-116" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-51" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-109" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-106" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-71" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-107" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-26" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-80" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-20" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-37" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-98" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-87" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-72" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-35" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-88" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-62" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-68" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-108" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-59" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-47" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-36" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-30" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-19" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-81" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-73" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-22" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-79" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-32" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-104" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-112" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-102" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-57" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-76" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-115" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-99" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-67" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-23" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-63" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-38" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-82" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-103" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-29" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-69" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-93" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-101" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-25" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-77" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-60" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-100" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-110" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-118" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-70" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-96" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-117" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-45" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-24" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-49" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-90" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-78" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-66" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-50" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-75" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-27" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-113" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-44" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-40" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-43" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-114" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-41" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-89" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-94" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-85" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-58" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-86" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-65" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-48" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-97" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-39" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-21" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-74" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-91" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-56" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-28" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-84" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-64" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-33" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-42" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-52" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-83" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-54" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-111" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-95" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-31" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-53" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-105" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-92" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-55" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-61" java.lang.NullPointerException
+	at app.snapshot_bitcake.LaiYangBitcakeManager.recordGiveTransaction(LaiYangBitcakeManager.java:147)
+	at servent.message.TransactionMessage.sendEffect(TransactionMessage.java:44)
+	at servent.message.util.DelayedMessageSender.run(DelayedMessageSender.java:71)
+	at java.lang.Thread.run(Thread.java:745)

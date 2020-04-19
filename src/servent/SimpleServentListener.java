@@ -15,11 +15,8 @@ import app.snapshot_bitcake.SnapshotID;
 import servent.handler.MessageHandler;
 import servent.handler.NullHandler;
 import servent.handler.TransactionHandler;
-import servent.handler.snapshot.LYMarkerHandler;
-import servent.handler.snapshot.LYMarkerResponseHandler;
-import servent.handler.snapshot.LYTellHandler;
+import servent.handler.snapshot.*;
 import servent.message.Message;
-import servent.message.snapshot.LYMarkerResponse;
 import servent.message.util.MessageUtil;
 
 public class SimpleServentListener implements Runnable, Cancellable {
@@ -67,15 +64,17 @@ public class SimpleServentListener implements Runnable, Cancellable {
 				// Dakle da li je region -1, ako jeste, salji posaljiocu poruke informaciju
 				// o tome koji si ti region, to radis samo ako je tip poruke marker
 				synchronized (AppConfig.versionLock) {
-					for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
-						if (snapshotID.getVersion() > AppConfig.initiatorVersions.get(snapshotID.getInitId())) {
-							LaiYangBitcakeManager lyFinancialManager =
-									(LaiYangBitcakeManager)snapshotCollector.getBitcakeManager();
-							lyFinancialManager.markerEvent(
-									snapshotID.getInitId(), snapshotCollector,
-									snapshotID.getVersion(),
-									clientMessage.getRoute().get(clientMessage.getRoute().size() - 1).getId());
-							break;
+					if (AppConfig.region.get() == -1) {
+						for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
+							if (snapshotID.getVersion() > AppConfig.initiatorVersions.get(snapshotID.getInitId())) {
+								LaiYangBitcakeManager lyFinancialManager =
+										(LaiYangBitcakeManager) snapshotCollector.getBitcakeManager();
+								lyFinancialManager.markerEvent(
+										snapshotID.getInitId(), snapshotCollector,
+										snapshotID.getVersion(),
+										clientMessage.getRoute().get(clientMessage.getRoute().size() - 1).getId());
+								break;
+							}
 						}
 					}
 				}
@@ -99,6 +98,12 @@ public class SimpleServentListener implements Runnable, Cancellable {
 						break;
 					case LY_MARKER_RESPONSE:
 						messageHandler = new LYMarkerResponseHandler(clientMessage);
+						break;
+					case LYSK_NEIGHBOR_NOTIFY:
+						messageHandler = new LYSKNeighborNotifyHandler(clientMessage);
+						break;
+					case LYSK_TREE_NOTIFY:
+						messageHandler = new LYSKTreeNotifyHandler(clientMessage);
 						break;
 				}
 				

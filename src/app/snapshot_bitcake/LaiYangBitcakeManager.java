@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 import app.AppConfig;
 import servent.message.Message;
 import servent.message.snapshot.LYMarkerMessage;
-import servent.message.snapshot.LYMarkerResponse;
+import servent.message.snapshot.LYMarkerResponseMessage;
 import servent.message.util.ChildResultCollector;
 import servent.message.util.MessageUtil;
 
@@ -57,7 +57,7 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			AppConfig.initiatorVersions.put(collectorId, version);
 			initMapForSnapshot(collectorId, AppConfig.initiatorVersions.get(collectorId));
 
-//			AppConfig.region.set(collectorId);
+			AppConfig.region.set(collectorId);
 			AppConfig.treeParent.set(parent);
 
 			recordedAmount = getCurrentBitcakeAmount();
@@ -85,13 +85,13 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 				MessageUtil.sendMessage(clMarker);
 
 				if (neighbor == parent) {
-					LYMarkerResponse lyMarkerResponse = new LYMarkerResponse(AppConfig.myServentInfo,
+					LYMarkerResponseMessage lyMarkerResponse = new LYMarkerResponseMessage(AppConfig.myServentInfo,
 							AppConfig.getInfoById(neighbor), -1);
 					MessageUtil.sendMessage(lyMarkerResponse);
 				} else {
 
-					Message lyMarkerResponse = new LYMarkerResponse(AppConfig.myServentInfo,
-							AppConfig.getInfoById(neighbor), -2) {
+					Message lyMarkerResponse = new LYMarkerResponseMessage(AppConfig.myServentInfo,
+							AppConfig.getInfoById(neighbor), collectorId) {
 						private static final long serialVersionUID = -269153763891389772L;
 					}.makeMeASender();
 					MessageUtil.sendMessage(lyMarkerResponse);

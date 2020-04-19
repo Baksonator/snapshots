@@ -61,5 +61,6 @@ public class ChildResultCollector implements Runnable {
         MessageUtil.sendMessage(tellMessage);
 
 //        AppConfig.treeParent.set(-1);
+//        AppConfig.region.set(-1);
     }
 }

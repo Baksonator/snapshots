@@ -51,7 +51,10 @@ public class DelayedMessageSender implements Runnable {
 			 * to override setRedColor() because of this.
 			 */
 			synchronized (AppConfig.versionLock) {
-				if (messageToSend.getMessageType() != MessageType.LY_TELL) {
+				if (messageToSend.getMessageType() != MessageType.LY_TELL &&
+						messageToSend.getMessageType() != MessageType.LYSK_NEIGHBOR_NOTIFY &&
+						messageToSend.getMessageType() != MessageType.LYSK_TREE_NOTIFY) {
+
 					messageToSend = messageToSend.setSnapshotIDS();
 				}
 
