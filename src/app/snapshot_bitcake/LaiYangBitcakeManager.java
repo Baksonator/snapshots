@@ -28,6 +28,7 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 		return currentAmount.get();
 	}
 
+	// TODO Koristi ovo za "nesigurne istorije"
 	private final Map<Integer, Integer> giveHistory = new ConcurrentHashMap<>();
 	private final Map<Integer, Integer> getHistory = new ConcurrentHashMap<>();
 
@@ -57,7 +58,7 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			AppConfig.initiatorVersions.put(collectorId, version);
 			initMapForSnapshot(collectorId, AppConfig.initiatorVersions.get(collectorId));
 
-			// TODO Prepraviti ovaj hak
+			// TODO Prepraviti ovaj hak, mada mozda i ne moras
 			for (int initiator : AppConfig.initiatorIds) {
 				initMapForSnapshot(initiator, AppConfig.initiatorVersions.get(initiator) + 1);
 			}

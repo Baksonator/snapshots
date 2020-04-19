@@ -25,6 +25,7 @@ public class LYSKTreeNotifyHandler implements MessageHandler {
             MessageUtil.sendMessage(toSend);
         }
 
+        // TODO Mora i da se azurira i isprazni "nesigurna" istorija
         for (int initiator : lyskTreeNotifyMessage.getInitiators()) {
             int oldVersion = AppConfig.initiatorVersions.get(initiator);
             AppConfig.initiatorVersions.put(initiator, oldVersion + 1);

@@ -1,6 +1,7 @@
 package servent.handler.snapshot;
 
 import app.AppConfig;
+import app.snapshot_bitcake.SKRoundResult;
 import servent.handler.MessageHandler;
 import servent.message.Message;
 import servent.message.snapshot.LYSKNeighborNotifyMessage;
@@ -17,6 +18,9 @@ public class LYSKNeighborNotifyHandler implements MessageHandler {
     public void run() {
         LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = (LYSKNeighborNotifyMessage)clientMessage;
 
-        AppConfig.regionResponses.add(lyskNeighborNotifyMessage.getLySnapshotResults());
+        SKRoundResult skRoundResult = new SKRoundResult(clientMessage.getOriginalSenderInfo().getId(),
+                lyskNeighborNotifyMessage.getLySnapshotResults());
+
+        AppConfig.regionResponses.add(skRoundResult);
     }
 }

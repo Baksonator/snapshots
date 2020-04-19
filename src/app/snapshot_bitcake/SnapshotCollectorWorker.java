@@ -104,26 +104,96 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			}
 
 			// Exchange, for now everyone sends to everyone
-			// TODO Round exchange
 			neighobringRegions.remove(AppConfig.myServentInfo.getId());
-			int expectedReponses = neighobringRegions.size();
+			int expectedBlanks = neighobringRegions.size();
+			Map<Integer, List<Integer>> neighborHas = new HashMap<>();
 
 			lySnapshotResults.add(collectedLYValues.get(AppConfig.myServentInfo.getId()));
 			for (Integer neighborInitiator : neighobringRegions) {
+				List<Integer> sent = new ArrayList<>();
+				sent.add(AppConfig.myServentInfo.getId());
+				neighborHas.put(neighborInitiator, sent);
+
+				Map<Integer, List<LYSnapshotResult>> toSend = new HashMap<>();
+				toSend.put(AppConfig.myServentInfo.getId(), lySnapshotResults);
+
 				LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-						AppConfig.getInfoById(neighborInitiator), lySnapshotResults);
+						AppConfig.getInfoById(neighborInitiator), toSend);
 
 				MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 			}
 
+			Set<Integer> gotResultsFrom = new HashSet<>();
+
+			AppConfig.timestampedErrorPrint("Koliko imam nejbora: " + expectedBlanks);
+
 			List<LYSnapshotResult> resultsFromNeighobrs = new ArrayList<>();
-			while (expectedReponses > 0) {
-				try {
-					resultsFromNeighobrs.addAll(AppConfig.regionResponses.take());
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			while (true) {
+				int roundAnswers = expectedBlanks;
+				Map<Integer, List<LYSnapshotResult>> newRegions = new HashMap<>();
+				boolean gotNewResults = false;
+
+				for (int i = 0; i < expectedBlanks; i++) {
+					try {
+						SKRoundResult newResult = AppConfig.regionResponses.take();
+						AppConfig.timestampedErrorPrint("USAO");
+						if (newResult.getLySnapshotResult().isEmpty()) {
+							roundAnswers--;
+							AppConfig.timestampedErrorPrint("IZACICE");
+						} else {
+							for (Integer key : newResult.getLySnapshotResult().keySet()) {
+								if (gotResultsFrom.add(key)) {
+									newRegions.put(key, newResult.getLySnapshotResult().get(key));
+									neighborHas.get(newResult.getSender()).add(key);
+									gotNewResults = true;
+									resultsFromNeighobrs.addAll(newResult.getLySnapshotResult().get(key));
+								}
+							}
+
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-				expectedReponses--;
+
+				if (roundAnswers == 0) {
+					break;
+				}
+
+				if (!gotNewResults) {
+					for (Integer neighborInitiator : neighobringRegions) {
+						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+								AppConfig.getInfoById(neighborInitiator), new HashMap<>());
+
+						MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+					}
+				} else {
+
+					for (Integer neighborInitiator : neighobringRegions) {
+						boolean shouldSend = false;
+						Map<Integer, List<LYSnapshotResult>> toSend = new HashMap<>();
+
+						for (Integer newRegion : newRegions.keySet()) {
+							if (!neighborHas.get(neighborInitiator).contains(newRegion)) {
+								shouldSend = true;
+
+								toSend.put(newRegion, newRegions.get(newRegion));
+							}
+						}
+
+						if (!shouldSend) {
+							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+									AppConfig.getInfoById(neighborInitiator), new HashMap<>());
+
+							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+						} else {
+							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+									AppConfig.getInfoById(neighborInitiator), toSend);
+
+							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+						}
+					}
+				}
 			}
 
 			for (LYSnapshotResult lySnapshotResult : resultsFromNeighobrs) {
@@ -160,7 +230,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			
 			AppConfig.timestampedStandardPrint("System bitcake count: " + sum);
 
-			List<Integer> initiators = new ArrayList<>(neighobringRegions);
+			List<Integer> initiators = new ArrayList<>(gotResultsFrom);
 			for (int child : AppConfig.treeChildren) {
 				LYSKTreeNotifyMessage toSend = new LYSKTreeNotifyMessage(AppConfig.myServentInfo, AppConfig.getInfoById(child),
 						initiators);
@@ -168,6 +238,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				MessageUtil.sendMessage(toSend);
 			}
 
+			// TODO Mora i da se azurira i isprazni "nesigurna" istorija
 			for (int initiator : initiators) {
 				int oldVersion = AppConfig.initiatorVersions.get(initiator);
 				AppConfig.initiatorVersions.put(initiator, oldVersion + 1);

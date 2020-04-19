@@ -2,24 +2,24 @@ package servent.message.snapshot;
 
 import app.ServentInfo;
 import app.snapshot_bitcake.LYSnapshotResult;
-import app.snapshot_bitcake.SnapshotID;
 import servent.message.BasicMessage;
 import servent.message.MessageType;
 
 import java.util.List;
+import java.util.Map;
 
 public class LYSKNeighborNotifyMessage extends BasicMessage {
 
     private static final long serialVersionUID = -472280305312676054L;
 
-    private final List<LYSnapshotResult> lySnapshotResults;
+    private final Map<Integer, List<LYSnapshotResult>> lySnapshotResults;
 
     public LYSKNeighborNotifyMessage(ServentInfo originalSenderInfo, ServentInfo receiverInfo,
-                                     List<LYSnapshotResult> lySnapshotResults) {
+                                     Map<Integer, List<LYSnapshotResult>> lySnapshotResults) {
         super(MessageType.LYSK_NEIGHBOR_NOTIFY, originalSenderInfo, receiverInfo);
 
         this.lySnapshotResults = lySnapshotResults;
     }
 
-    public List<LYSnapshotResult> getLySnapshotResults() { return lySnapshotResults; }
+    public Map<Integer, List<LYSnapshotResult>> getLySnapshotResults() { return lySnapshotResults; }
 }

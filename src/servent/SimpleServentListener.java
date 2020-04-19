@@ -60,9 +60,6 @@ public class SimpleServentListener implements Runnable, Cancellable {
 				//GOT A MESSAGE! <3
 				clientMessage = MessageUtil.readMessage(clientSocket);
 
-				// TODO Ovde treba proveravati i da li imamo region, i ako da, ne radimo markerEvent
-				// Dakle da li je region -1, ako jeste, salji posaljiocu poruke informaciju
-				// o tome koji si ti region, to radis samo ako je tip poruke marker
 				synchronized (AppConfig.versionLock) {
 					if (AppConfig.region.get() == -1) {
 						for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {

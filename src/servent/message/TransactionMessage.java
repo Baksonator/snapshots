@@ -21,6 +21,7 @@ public class TransactionMessage extends BasicMessage {
 
 	private final transient BitcakeManager bitcakeManager;
 
+	// TODO Potencijalno dodati da se salje region u poruci, tj. nekako oznaciti da je stanje "nesigurno"
 	public TransactionMessage(ServentInfo sender, ServentInfo receiver, int amount, BitcakeManager bitcakeManager) {
 		super(MessageType.TRANSACTION, sender, receiver, String.valueOf(amount));
 		this.bitcakeManager = bitcakeManager;

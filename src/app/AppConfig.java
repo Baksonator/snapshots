@@ -1,6 +1,7 @@
 package app;
 
 import app.snapshot_bitcake.LYSnapshotResult;
+import app.snapshot_bitcake.SKRoundResult;
 import app.snapshot_bitcake.SnapshotID;
 
 import java.io.File;
@@ -38,7 +39,8 @@ public class AppConfig {
 	public static AtomicInteger region = new AtomicInteger(-1);
 	public static AtomicInteger treeParent = new AtomicInteger(-1);
 	public static List<Integer> treeChildren = new CopyOnWriteArrayList<>();
-	public static BlockingQueue<List<LYSnapshotResult>> regionResponses = new LinkedBlockingQueue<>();
+	// TODO Dodati nesto slicno kao za vektorske casovnike, posto su poruke ne-FIFO
+	public static BlockingQueue<SKRoundResult> regionResponses = new LinkedBlockingQueue<>();
 	public static BlockingQueue<Integer> neighborResponses = new LinkedBlockingDeque<>();
 	public static BlockingQueue<List<LYSnapshotResult>> childrenResponses = new LinkedBlockingQueue<>();
 	public static Map<Integer, Integer> initiatorVersions = new ConcurrentHashMap<>();
