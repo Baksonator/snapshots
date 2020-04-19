@@ -84,7 +84,7 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 						collectorId).makeMeASender();
 				MessageUtil.sendMessage(clMarker);
 
-				if (neighbor == parent && parent != collectorId) {
+				if (neighbor == parent) {
 					LYMarkerResponse lyMarkerResponse = new LYMarkerResponse(AppConfig.myServentInfo,
 							AppConfig.getInfoById(neighbor), -1);
 					MessageUtil.sendMessage(lyMarkerResponse);

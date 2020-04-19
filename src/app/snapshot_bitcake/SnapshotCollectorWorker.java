@@ -1,6 +1,6 @@
 package app.snapshot_bitcake;
 
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -66,28 +66,42 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			((LaiYangBitcakeManager)bitcakeManager).markerEvent(AppConfig.myServentInfo.getId(), this,
 					mySnapshotVersion, -1);
 
-			// TODO Ovde treba izmeniti celu logiku, mora da ceka da mu sva deca odgovore, probaj da ukombinujes sa
-			// ovime sto ce biti u markerEvent
-			// Takodje, ispis ce biti drugaciji, jer na pocetku nece imati potpune informacije
-			// Kasnije mora da se implementira razmena po rundama
 			//2 wait for responses or finish
-			boolean waiting = true;
-			while (waiting) {
-				if (collectedLYValues.size() == AppConfig.getServentCount()) {
-					waiting = false;
-				}
-				
+			int children = 0;
+			Set<Integer> neighobringRegions = new HashSet<>();
+
+			int k = 0;
+			while (k < AppConfig.myServentInfo.getNeighbors().size()) {
 				try {
-					Thread.sleep(1000);
+					int res = AppConfig.neighborResponses.take();
+					if (res == -1) {
+						children++;
+					} else if (res >= 0) {
+						neighobringRegions.add(res);
+					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
-				if (!working) {
-					return;
-				}
+				k++;
 			}
-			
+
+			List<LYSnapshotResult> lySnapshotResults = new ArrayList<>();
+			while (children > 0) {
+				try {
+					lySnapshotResults.addAll(AppConfig.childrenResponses.take());
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				children--;
+			}
+
+			for (LYSnapshotResult lySnapshotResult : lySnapshotResults) {
+				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
+			}
+
+			// TODO citati susedne regione iz lySnapshotResults
+			// Takodje, ispis ce biti drugaciji, jer na pocetku nece imati potpune informacije
+			// Kasnije mora da se implementira razmena po rundama
 			//print
 			int sum;
 			sum = 0;

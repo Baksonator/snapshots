@@ -14,7 +14,6 @@ public class LYTellMessage extends BasicMessage {
 
 	private static final long serialVersionUID = 3116394054726162318L;
 
-	// TODO Staviti da se prati i lista susednih regiona
 	private List<LYSnapshotResult> lySnapshotResults;
 	
 	public LYTellMessage(ServentInfo sender, ServentInfo receiver, List<LYSnapshotResult> lySnapshotResults) {
@@ -43,6 +42,4 @@ public class LYTellMessage extends BasicMessage {
 
 		return toReturn;
 	}
-
-	// TODO Napravi i da ovde imas makeMeASender, trebace za raspustanje stabla
 }

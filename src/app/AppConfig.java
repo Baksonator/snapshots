@@ -37,6 +37,7 @@ public class AppConfig {
 
 	public static AtomicInteger region = new AtomicInteger(-1);
 	public static AtomicInteger treeParent = new AtomicInteger(-1);
+	public static List<Integer> treeChildren = new CopyOnWriteArrayList<>();
 	public static BlockingQueue<Integer> neighborResponses = new LinkedBlockingDeque<>();
 	public static BlockingQueue<List<LYSnapshotResult>> childrenResponses = new LinkedBlockingQueue<>();
 	public static Map<Integer, Integer> initiatorVersions = new ConcurrentHashMap<>();
