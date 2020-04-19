@@ -57,6 +57,11 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			AppConfig.initiatorVersions.put(collectorId, version);
 			initMapForSnapshot(collectorId, AppConfig.initiatorVersions.get(collectorId));
 
+			// TODO Prepraviti ovaj hak
+			for (int initiator : AppConfig.initiatorIds) {
+				initMapForSnapshot(initiator, AppConfig.initiatorVersions.get(initiator) + 1);
+			}
+
 			AppConfig.region.set(collectorId);
 			AppConfig.treeParent.set(parent);
 
