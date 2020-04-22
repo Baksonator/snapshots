@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import app.AppConfig;
+import servent.message.Message;
 import servent.message.snapshot.LYSKNeighborNotifyMessage;
 import servent.message.snapshot.LYSKTreeNotifyMessage;
 import servent.message.util.MessageUtil;
@@ -26,6 +27,8 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	private final Map<Integer, LYSnapshotResult> collectedLYValues = new ConcurrentHashMap<>();
 
 	private int mySnapshotVersion = 0;
+
+	private final Map<Integer, Integer> expectingMessage = new HashMap<>();
 	
 	private final BitcakeManager bitcakeManager;
 
@@ -108,8 +111,14 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			int expectedBlanks = neighobringRegions.size();
 			Map<Integer, List<Integer>> neighborHas = new HashMap<>();
 
+			Map<Integer, Integer> sentMessageNumber = new HashMap<>();
+
 			lySnapshotResults.add(collectedLYValues.get(AppConfig.myServentInfo.getId()));
 			for (Integer neighborInitiator : neighobringRegions) {
+				// Start first round, send messages to all neighboring regions about the stuff we know
+				// Update the neighborHas map where we track what our neighbor already has that we dont have to send
+				// Update the maps for counting the number of messages received
+
 				List<Integer> sent = new ArrayList<>();
 				sent.add(AppConfig.myServentInfo.getId());
 				neighborHas.put(neighborInitiator, sent);
@@ -118,7 +127,10 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				toSend.put(AppConfig.myServentInfo.getId(), lySnapshotResults);
 
 				LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-						AppConfig.getInfoById(neighborInitiator), toSend);
+						AppConfig.getInfoById(neighborInitiator), toSend, 1);
+
+				sentMessageNumber.put(neighborInitiator, 1);
+				expectingMessage.put(neighborInitiator, 1);
 
 				MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 			}
@@ -130,17 +142,29 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			List<LYSnapshotResult> resultsFromNeighobrs = new ArrayList<>();
 			while (true) {
 				int roundAnswers = expectedBlanks;
+				int blankAnswers = expectedBlanks;
+
 				Map<Integer, List<LYSnapshotResult>> newRegions = new HashMap<>();
 				boolean gotNewResults = false;
 
-				for (int i = 0; i < expectedBlanks; i++) {
+				while (roundAnswers > 0) {
+
+					while (AppConfig.regionResponses.isEmpty()) {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						checkPendingMesasges();
+					}
+
 					try {
 						SKRoundResult newResult = AppConfig.regionResponses.take();
-						AppConfig.timestampedErrorPrint("USAO");
+
 						if (newResult.getLySnapshotResult().isEmpty()) {
-							roundAnswers--;
-							AppConfig.timestampedErrorPrint("IZACICE");
+							blankAnswers--;
 						} else {
+
 							for (Integer key : newResult.getLySnapshotResult().keySet()) {
 								if (gotResultsFrom.add(key)) {
 									newRegions.put(key, newResult.getLySnapshotResult().get(key));
@@ -151,19 +175,24 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 							}
 
 						}
+
+						roundAnswers--;
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+
 				}
 
-				if (roundAnswers == 0) {
+				if (blankAnswers == 0) {
 					break;
 				}
 
 				if (!gotNewResults) {
 					for (Integer neighborInitiator : neighobringRegions) {
 						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-								AppConfig.getInfoById(neighborInitiator), new HashMap<>());
+								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+
+						sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
 						MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 					}
@@ -183,18 +212,101 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 						if (!shouldSend) {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-									AppConfig.getInfoById(neighborInitiator), new HashMap<>());
+									AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+
+							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
 							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 						} else {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-									AppConfig.getInfoById(neighborInitiator), toSend);
+									AppConfig.getInfoById(neighborInitiator), toSend, sentMessageNumber.get(neighborInitiator) + 1);
+
+							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
 							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 						}
 					}
 				}
+
+				for (Integer key : expectingMessage.keySet()) {
+					expectingMessage.put(key, expectingMessage.get(key) + 1);
+				}
+
 			}
+
+//			while (true) {
+//				int roundAnswers = expectedBlanks;
+//				Map<Integer, List<LYSnapshotResult>> newRegions = new HashMap<>();
+//				boolean gotNewResults = false;
+//
+//				for (int i = 0; i < expectedBlanks; i++) {
+//					try {
+//						SKRoundResult newResult = AppConfig.regionResponses.take();
+//						AppConfig.timestampedErrorPrint("USAO");
+//						if (newResult.getLySnapshotResult().isEmpty()) {
+//							roundAnswers--;
+//							AppConfig.timestampedErrorPrint("IZACICE");
+//						} else {
+//							for (Integer key : newResult.getLySnapshotResult().keySet()) {
+//								if (gotResultsFrom.add(key)) {
+//									newRegions.put(key, newResult.getLySnapshotResult().get(key));
+//									neighborHas.get(newResult.getSender()).add(key);
+//									gotNewResults = true;
+//									resultsFromNeighobrs.addAll(newResult.getLySnapshotResult().get(key));
+//								}
+//							}
+//
+//						}
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//
+//				if (roundAnswers == 0) {
+//					break;
+//				}
+//
+//				if (!gotNewResults) {
+//					for (Integer neighborInitiator : neighobringRegions) {
+//						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+//								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+//
+//						sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
+//
+//						MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+//					}
+//				} else {
+//
+//					for (Integer neighborInitiator : neighobringRegions) {
+//						boolean shouldSend = false;
+//						Map<Integer, List<LYSnapshotResult>> toSend = new HashMap<>();
+//
+//						for (Integer newRegion : newRegions.keySet()) {
+//							if (!neighborHas.get(neighborInitiator).contains(newRegion)) {
+//								shouldSend = true;
+//
+//								toSend.put(newRegion, newRegions.get(newRegion));
+//							}
+//						}
+//
+//						if (!shouldSend) {
+//							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+//									AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+//
+//							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
+//
+//							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+//						} else {
+//							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+//									AppConfig.getInfoById(neighborInitiator), toSend, sentMessageNumber.get(neighborInitiator) + 1);
+//
+//							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
+//
+//							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+//						}
+//					}
+//				}
+//			}
 
 			for (LYSnapshotResult lySnapshotResult : resultsFromNeighobrs) {
 				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
@@ -281,5 +393,20 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	@Override
 	public int getMySnapshotVersion() {
 		return mySnapshotVersion;
+	}
+
+	public void checkPendingMesasges() {
+
+		Iterator<SKRoundResult> iterator = AppConfig.pendingResults.iterator();
+		while (iterator.hasNext()) {
+			SKRoundResult pendingMessage = iterator.next();
+
+			if (pendingMessage.getMessageNo() == expectingMessage.get(pendingMessage.getSender())) {
+				AppConfig.regionResponses.add(pendingMessage);
+
+				// Do this in round handler
+//				expectingMessage.put(pendingMessage.getSender(), expectingMessage.get(pendingMessage.getSender() + 1));
+			}
+		}
 	}
 }

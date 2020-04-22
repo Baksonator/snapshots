@@ -19,8 +19,9 @@ public class LYSKNeighborNotifyHandler implements MessageHandler {
         LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = (LYSKNeighborNotifyMessage)clientMessage;
 
         SKRoundResult skRoundResult = new SKRoundResult(clientMessage.getOriginalSenderInfo().getId(),
-                lyskNeighborNotifyMessage.getLySnapshotResults());
+                lyskNeighborNotifyMessage.getLySnapshotResults(), lyskNeighborNotifyMessage.getMessageNo());
 
-        AppConfig.regionResponses.add(skRoundResult);
+        AppConfig.pendingResults.add(skRoundResult);
+//        AppConfig.regionResponses.add(skRoundResult);
     }
 }

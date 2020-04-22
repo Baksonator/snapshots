@@ -40,6 +40,7 @@ public class AppConfig {
 	public static AtomicInteger treeParent = new AtomicInteger(-1);
 	public static List<Integer> treeChildren = new CopyOnWriteArrayList<>();
 	// TODO Dodati nesto slicno kao za vektorske casovnike, posto su poruke ne-FIFO
+	public static Queue<SKRoundResult> pendingResults = new ConcurrentLinkedQueue<>();
 	public static BlockingQueue<SKRoundResult> regionResponses = new LinkedBlockingQueue<>();
 	public static BlockingQueue<Integer> neighborResponses = new LinkedBlockingDeque<>();
 	public static BlockingQueue<List<LYSnapshotResult>> childrenResponses = new LinkedBlockingQueue<>();
