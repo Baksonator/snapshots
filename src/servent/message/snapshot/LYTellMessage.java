@@ -14,7 +14,7 @@ public class LYTellMessage extends BasicMessage {
 
 	private static final long serialVersionUID = 3116394054726162318L;
 
-	private List<LYSnapshotResult> lySnapshotResults;
+	private final List<LYSnapshotResult> lySnapshotResults;
 	
 	public LYTellMessage(ServentInfo sender, ServentInfo receiver, List<LYSnapshotResult> lySnapshotResults) {
 		super(MessageType.LY_TELL, sender, receiver);
@@ -37,9 +37,7 @@ public class LYTellMessage extends BasicMessage {
 	public Message setSnapshotIDS() {
 		List<SnapshotID> snapshotIDS = AppConfig.getSnapshotIDS();
 
-		Message toReturn = new LYTellMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
+		return new LYTellMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
 				getRoute(), getMessageText(), snapshotIDS, getMessageId(), getLYSnapshotResults());
-
-		return toReturn;
 	}
 }

@@ -91,7 +91,7 @@ public class SimpleServentListener implements Runnable, Cancellable {
 						messageHandler = new LYMarkerHandler();
 						break;
 					case LY_TELL:
-						messageHandler = new LYTellHandler(clientMessage, snapshotCollector);
+						messageHandler = new LYTellHandler(clientMessage);
 						break;
 					case LY_MARKER_RESPONSE:
 						messageHandler = new LYMarkerResponseHandler(clientMessage);

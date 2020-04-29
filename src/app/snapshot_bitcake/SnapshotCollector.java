@@ -17,6 +17,4 @@ public interface SnapshotCollector extends Runnable, Cancellable {
 
 	void startCollecting();
 
-	int getMySnapshotVersion();
-
 }

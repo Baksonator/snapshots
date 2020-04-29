@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import app.AppConfig;
-import servent.message.Message;
 import servent.message.snapshot.LYSKNeighborNotifyMessage;
 import servent.message.snapshot.LYSKTreeNotifyMessage;
 import servent.message.util.MessageUtil;
@@ -114,6 +113,9 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			Map<Integer, Integer> sentMessageNumber = new HashMap<>();
 
 			lySnapshotResults.add(collectedLYValues.get(AppConfig.myServentInfo.getId()));
+
+			StringBuilder stringBuilder = new StringBuilder();
+			String comma = "";
 			for (Integer neighborInitiator : neighobringRegions) {
 				// Start first round, send messages to all neighboring regions about the stuff we know
 				// Update the neighborHas map where we track what our neighbor already has that we dont have to send
@@ -132,14 +134,16 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				sentMessageNumber.put(neighborInitiator, 1);
 				expectingMessage.put(neighborInitiator, 1);
 
-				AppConfig.timestampedErrorPrint("Saljem svoje podatke : " + neighborInitiator + " i broj poruke je " + sentMessageNumber.get(neighborInitiator));
+				stringBuilder.append(comma);
+				stringBuilder.append(neighborInitiator);
+				comma = ",";
 
 				MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 			}
 
-			Set<Integer> gotResultsFrom = new HashSet<>();
+			AppConfig.timestampedStandardPrint("My neighbors are: " + stringBuilder.toString());
 
-			AppConfig.timestampedErrorPrint("Koliko imam nejbora: " + expectedBlanks);
+			Set<Integer> gotResultsFrom = new HashSet<>();
 
 			List<LYSnapshotResult> resultsFromNeighobrs = new ArrayList<>();
 			while (true) {
@@ -163,13 +167,14 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 					try {
 						SKRoundResult newResult = AppConfig.regionResponses.take();
 
-						// TODO Lep ispis od koga je dobio i za koga je dobio
-						AppConfig.timestampedErrorPrint("Dobio sam od : " + newResult.getSender() + " i poruka je broj: " + newResult.getMessageNo());
-
 						if (newResult.getLySnapshotResult().isEmpty()) {
 							blankAnswers--;
 							expectedBlanks--;
+							AppConfig.timestampedStandardPrint("Got blank message from: " +  newResult.getSender() + " in round: " + newResult.getMessageNo());
 						} else {
+
+							StringBuilder sb = new StringBuilder();
+							comma = "";
 
 							for (Integer key : newResult.getLySnapshotResult().keySet()) {
 								if (gotResultsFrom.add(key)) {
@@ -179,8 +184,12 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 									resultsFromNeighobrs.addAll(newResult.getLySnapshotResult().get(key));
 								}
 								neighborHas.get(newResult.getSender()).add(key);
+								sb.append(comma);
+								sb.append(key);
+								comma = ",";
 							}
 
+							AppConfig.timestampedStandardPrint("Got results for regions: " + sb.toString() + " from: " + newResult.getSender() + " in round: " + newResult.getMessageNo());
 						}
 
 						roundAnswers--;
@@ -191,17 +200,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				}
 
 				if (blankAnswers == 0) {
-//					for (Integer neighborInitiator : neighobringRegions) {
-//						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-//								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
-//
-////						AppConfig.timestampedErrorPrint("Saljem blank jer sam ja dobio sve blank njemu : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
-//
-//						sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
-//
-//						MessageUtil.sendMessage(lyskNeighborNotifyMessage);
-//					}
-
 					break;
 				}
 
@@ -211,8 +209,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 					for (Integer neighborInitiator : neighobringRegions) {
 						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
 								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
-
-						AppConfig.timestampedErrorPrint("Saljem blank jer nisam dobio nista novo : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
 
 						toRemove.add(neighborInitiator);
 
@@ -238,8 +234,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
 									AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
 
-							AppConfig.timestampedErrorPrint("Saljem blank jer vec ima sve : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
-
 							toRemove.add(neighborInitiator);
 
 							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
@@ -248,8 +242,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 						} else {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
 									AppConfig.getInfoById(neighborInitiator), toSend, sentMessageNumber.get(neighborInitiator) + 1);
-
-							AppConfig.timestampedErrorPrint("Saljem content : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
 
 							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
@@ -260,9 +252,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 				neighobringRegions.removeAll(toRemove);
 
-				for (Integer key : expectingMessage.keySet()) {
-					expectingMessage.put(key, expectingMessage.get(key) + 1);
-				}
+				expectingMessage.replaceAll((k1, v) -> expectingMessage.get(k1) + 1);
 
 			}
 
@@ -346,11 +336,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	@Override
 	public void stop() {
 		working = false;
-	}
-
-	@Override
-	public int getMySnapshotVersion() {
-		return mySnapshotVersion;
 	}
 
 	public void checkPendingMesasges() {

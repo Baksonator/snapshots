@@ -1,7 +1,0 @@
-02:04:41 - Saljem svoje podatke : 6 i broj poruke je 1
-02:04:41 - Koliko imam nejbora: 1
-02:04:44 - Dobio sam od : 6 i poruka je broj: 1
-02:04:44 - Saljem blank jer vec ima sve : 6 i broj poruke je 2
-02:04:45 - Dobio sam od : 6 i poruka je broj: 2
-02:04:47 - Dobio sam od : 6 i poruka je broj: 3
-02:05:17 - Koliko imam nejbora: 0
