@@ -1,0 +1,18 @@
+02:04:42 - Saljem svoje podatke : 0 i broj poruke je 1
+02:04:42 - Saljem svoje podatke : 10 i broj poruke je 1
+02:04:42 - Saljem svoje podatke : 14 i broj poruke je 1
+02:04:42 - Koliko imam nejbora: 3
+02:04:43 - Dobio sam od : 14 i poruka je broj: 1
+02:04:43 - Dobio sam od : 0 i poruka je broj: 1
+02:04:43 - Dobio sam od : 10 i poruka je broj: 1
+02:04:43 - Saljem content : 0 i broj poruke je 2
+02:04:43 - Saljem content : 10 i broj poruke je 2
+02:04:43 - Saljem content : 14 i broj poruke je 2
+02:04:45 - Dobio sam od : 0 i poruka je broj: 2
+02:04:45 - Dobio sam od : 10 i poruka je broj: 2
+02:04:45 - Dobio sam od : 14 i poruka je broj: 2
+02:04:45 - Saljem blank jer nisam dobio nista novo : 0 i broj poruke je 3
+02:04:45 - Saljem blank jer nisam dobio nista novo : 10 i broj poruke je 3
+02:04:45 - Saljem blank jer nisam dobio nista novo : 14 i broj poruke je 3
+02:04:46 - Dobio sam od : 14 i poruka je broj: 3
+02:04:47 - Dobio sam od : 10 i poruka je broj: 3

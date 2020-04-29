@@ -58,6 +58,7 @@ public class ChildResultCollector implements Runnable {
         Message tellMessage = new LYTellMessage(
                 AppConfig.myServentInfo, AppConfig.getInfoById(parent), lySnapshotResults);
 
+        // TODO Ispis ko ti je parent i sta mu saljes
         MessageUtil.sendMessage(tellMessage);
 
 //        AppConfig.treeParent.set(-1);

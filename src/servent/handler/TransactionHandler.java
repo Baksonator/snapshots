@@ -29,9 +29,11 @@ public class TransactionHandler implements MessageHandler {
 				AppConfig.timestampedErrorPrint("Couldn't parse amount: " + amountString);
 				return;
 			}
-			
-			bitcakeManager.addSomeBitcakes(amountNumber);
+
+			// TODO Check this
+//			bitcakeManager.addSomeBitcakes(amountNumber);
 			synchronized (AppConfig.versionLock) {
+				bitcakeManager.addSomeBitcakes(amountNumber);
 				if (bitcakeManager instanceof LaiYangBitcakeManager) {
 					LaiYangBitcakeManager lyFinancialManager = (LaiYangBitcakeManager)bitcakeManager;
 					

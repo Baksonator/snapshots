@@ -1,0 +1,125 @@
+02:04:33 - Starting servent [0|localhost|1100]
+02:04:34 - Pausing for 1000 ms
+02:04:35 - Pausing for 30000 ms
+02:04:35 - Got message [2|3|8|TRANSACTION|0]
+02:04:35 - Got message [2|49|3|TRANSACTION|0]
+02:04:35 - Got message [2|7|5|TRANSACTION|0]
+02:04:35 - Got message [2|167|6|TRANSACTION|0]
+02:04:35 - Got message [2|82|8|TRANSACTION|0]
+02:04:35 - Got message [2|71|8|TRANSACTION|0]
+02:04:35 - Got message [2|53|8|TRANSACTION|0]
+02:04:35 - Got message [2|193|7|TRANSACTION|0]
+02:04:35 - Got message [2|60|10|TRANSACTION|0]
+02:04:35 - Got message [2|107|7|TRANSACTION|0]
+02:04:36 - Got message [2|101|8|TRANSACTION|0]
+02:04:36 - Got message [2|148|2|TRANSACTION|0]
+02:04:36 - Got message [2|39|2|TRANSACTION|0]
+02:04:36 - Got message [2|38|5|TRANSACTION|0]
+02:04:36 - Got message [2|73|7|TRANSACTION|0]
+02:04:36 - Got message [2|63|3|TRANSACTION|0]
+02:04:36 - Got message [2|183|5|TRANSACTION|0]
+02:04:36 - Got message [2|0|5|TRANSACTION|0]
+02:04:36 - Got message [2|122|4|TRANSACTION|0]
+02:04:36 - Got message [2|127|6|TRANSACTION|0]
+02:04:36 - Got message [2|108|9|TRANSACTION|0]
+02:04:36 - Got message [2|68|5|TRANSACTION|0]
+02:04:36 - Got message [2|98|5|TRANSACTION|0]
+02:04:36 - Got message [2|105|2|TRANSACTION|0]
+02:04:36 - Got message [2|157|10|TRANSACTION|0]
+02:04:36 - Got message [2|140|9|TRANSACTION|0]
+02:04:36 - Got message [2|1|7|TRANSACTION|0]
+02:04:36 - Got message [2|166|3|TRANSACTION|0]
+02:04:36 - Got message [2|58|1|TRANSACTION|0]
+02:04:36 - Got message [2|113|8|TRANSACTION|0]
+02:04:36 - Got message [2|112|10|TRANSACTION|0]
+02:04:36 - Got message [2|4|8|TRANSACTION|0]
+02:04:36 - Got message [2|2|5|TRANSACTION|0]
+02:04:36 - Got message [2|5|3|TRANSACTION|0]
+02:04:36 - Got message [2|6|6|TRANSACTION|0]
+02:04:36 - Got message [2|46|8|TRANSACTION|0]
+02:04:36 - Got message [2|8|9|TRANSACTION|0]
+02:04:36 - Got message [2|74|8|TRANSACTION|0]
+02:04:36 - Got message [2|15|1|TRANSACTION|0]
+02:04:36 - Got message [2|42|10|TRANSACTION|0]
+02:04:36 - Got message [2|78|3|TRANSACTION|0]
+02:04:36 - Got message [2|117|2|TRANSACTION|0]
+02:04:36 - Got message [2|9|3|TRANSACTION|0]
+02:04:36 - Got message [2|170|5|TRANSACTION|0]
+02:04:36 - Got message [2|145|4|TRANSACTION|0]
+02:04:36 - Got message [2|171|2|TRANSACTION|0]
+02:04:36 - Got message [2|131|3|TRANSACTION|0]
+02:04:36 - Got message [2|106|1|TRANSACTION|0]
+02:04:36 - Got message [2|180|8|TRANSACTION|0]
+02:04:37 - Got message [2|143|3|TRANSACTION|0]
+02:04:37 - Sending message [0|2|0|LY_MARKER|2]
+02:04:37 - Sending message [0|0|0|LY_MARKER|1]
+02:04:37 - Sending message [0|1|0|LY_MARKER_RESPONSE|1]
+02:04:37 - Sending message [0|3|0|LY_MARKER_RESPONSE|2]
+02:04:38 - Got message [2|200|0|LY_MARKER|0]
+02:04:38 - Got message [2|201|-1|LY_MARKER_RESPONSE|0]
+02:04:38 - Got message [1|1|-1|LY_MARKER_RESPONSE|0]
+02:04:39 - Got message [1|0|0|LY_MARKER|0]
+02:04:40 - Got message [1|6||LY_TELL|0]
+02:04:41 - Got message [2|208||LY_TELL|0]
+02:04:42 - Sending message [0|4||LYSK_NEIGHBOR_NOTIFY|6]
+02:04:43 - Got message [6|4||LYSK_NEIGHBOR_NOTIFY|0]
+02:04:44 - Got message [6|7||LYSK_NEIGHBOR_NOTIFY|0]
+02:04:44 - Sending message [0|5||LYSK_NEIGHBOR_NOTIFY|6]
+02:04:46 - Got message [6|10||LYSK_NEIGHBOR_NOTIFY|0]
+02:04:47 - Recorded bitcake amount for 0 = 1000
+02:04:47 - Recorded bitcake amount for 1 = 1555
+02:04:47 - Recorded bitcake amount for 2 = 199
+02:04:47 - Recorded bitcake amount for 3 = 1599
+02:04:47 - Recorded bitcake amount for 4 = 349
+02:04:47 - Recorded bitcake amount for 5 = 1250
+02:04:47 - Recorded bitcake amount for 6 = 1000
+02:04:47 - Recorded bitcake amount for 7 = 493
+02:04:47 - Recorded bitcake amount for 8 = 799
+02:04:47 - Recorded bitcake amount for 9 = 1196
+02:04:47 - Recorded bitcake amount for 10 = 1000
+02:04:47 - Recorded bitcake amount for 11 = 443
+02:04:47 - Recorded bitcake amount for 12 = 1113
+02:04:47 - Recorded bitcake amount for 13 = 160
+02:04:47 - Recorded bitcake amount for 14 = 1290
+02:04:47 - Recorded bitcake amount for 15 = 1533
+02:04:47 - Unreceived bitcake amount: 278 from servent 2 to servent 0
+02:04:47 - Unreceived bitcake amount: 242 from servent 7 to servent 6
+02:04:47 - Unreceived bitcake amount: 18 from servent 9 to servent 5
+02:04:47 - Unreceived bitcake amount: 7 from servent 9 to servent 10
+02:04:47 - Unreceived bitcake amount: 286 from servent 11 to servent 10
+02:04:47 - Unreceived bitcake amount: 123 from servent 12 to servent 13
+02:04:47 - Unreceived bitcake amount: 67 from servent 12 to servent 14
+02:04:47 - System bitcake count: 16000
+02:04:48 - Sending message [0|6||LYSK_TREE_NOTIFY|1]
+02:04:48 - Sending message [0|7||LYSK_TREE_NOTIFY|2]
+02:05:05 - Pausing for 30000 ms
+02:05:05 - Sending message [0|8|0|LY_MARKER|1]
+02:05:06 - Sending message [0|11|0|LY_MARKER_RESPONSE|2]
+02:05:06 - Sending message [0|9|0|LY_MARKER_RESPONSE|1]
+02:05:06 - Sending message [0|10|0|LY_MARKER|2]
+02:05:06 - Got message [1|7|0|LY_MARKER|0]
+02:05:06 - Got message [1|8|-1|LY_MARKER_RESPONSE|0]
+02:05:06 - Got message [2|210|0|LY_MARKER|0]
+02:05:07 - Got message [2|211|-1|LY_MARKER_RESPONSE|0]
+02:05:16 - Got message [2|218||LY_TELL|0]
+02:05:17 - Got message [1|13||LY_TELL|0]
+02:05:17 - Recorded bitcake amount for 0 = 1278
+02:05:17 - Recorded bitcake amount for 1 = 1555
+02:05:17 - Recorded bitcake amount for 2 = 199
+02:05:17 - Recorded bitcake amount for 3 = 1907
+02:05:17 - Recorded bitcake amount for 4 = 349
+02:05:17 - Recorded bitcake amount for 5 = 443
+02:05:17 - Recorded bitcake amount for 6 = 1501
+02:05:17 - Recorded bitcake amount for 7 = 742
+02:05:17 - Recorded bitcake amount for 8 = 1031
+02:05:17 - Recorded bitcake amount for 9 = 682
+02:05:17 - Recorded bitcake amount for 10 = 1584
+02:05:17 - Recorded bitcake amount for 11 = 443
+02:05:17 - Recorded bitcake amount for 12 = 764
+02:05:17 - Recorded bitcake amount for 13 = 430
+02:05:17 - Recorded bitcake amount for 14 = 1559
+02:05:17 - Recorded bitcake amount for 15 = 1533
+02:05:17 - System bitcake count: 16000
+02:05:18 - Sending message [0|12||LYSK_TREE_NOTIFY|2]
+02:05:18 - Sending message [0|13||LYSK_TREE_NOTIFY|1]
+02:05:35 - Stopping...

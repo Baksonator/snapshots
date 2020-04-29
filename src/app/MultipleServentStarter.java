@@ -107,8 +107,8 @@ public class MultipleServentStarter {
 	public static void main(String[] args) {
 //		startServentTest("ly_snapshot");
 //		startServentTest("ly_li_snapshot");
-		startServentTest("ly_li_sk_snapshot");
-		
+//		startServentTest("ly_li_sk_snapshot");
+		startServentTest("ly_li_sk_snapshot_big");
 	}
 
 }

@@ -109,7 +109,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			// Exchange, for now everyone sends to everyone
 			neighobringRegions.remove(AppConfig.myServentInfo.getId());
 			int expectedBlanks = neighobringRegions.size();
-			Map<Integer, List<Integer>> neighborHas = new HashMap<>();
+			Map<Integer, Set<Integer>> neighborHas = new HashMap<>();
 
 			Map<Integer, Integer> sentMessageNumber = new HashMap<>();
 
@@ -119,7 +119,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				// Update the neighborHas map where we track what our neighbor already has that we dont have to send
 				// Update the maps for counting the number of messages received
 
-				List<Integer> sent = new ArrayList<>();
+				Set<Integer> sent = new HashSet<>();
 				sent.add(AppConfig.myServentInfo.getId());
 				neighborHas.put(neighborInitiator, sent);
 
@@ -131,6 +131,8 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 				sentMessageNumber.put(neighborInitiator, 1);
 				expectingMessage.put(neighborInitiator, 1);
+
+				AppConfig.timestampedErrorPrint("Saljem svoje podatke : " + neighborInitiator + " i broj poruke je " + sentMessageNumber.get(neighborInitiator));
 
 				MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 			}
@@ -161,8 +163,12 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 					try {
 						SKRoundResult newResult = AppConfig.regionResponses.take();
 
+						// TODO Lep ispis od koga je dobio i za koga je dobio
+						AppConfig.timestampedErrorPrint("Dobio sam od : " + newResult.getSender() + " i poruka je broj: " + newResult.getMessageNo());
+
 						if (newResult.getLySnapshotResult().isEmpty()) {
 							blankAnswers--;
+							expectedBlanks--;
 						} else {
 
 							for (Integer key : newResult.getLySnapshotResult().keySet()) {
@@ -172,6 +178,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 									gotNewResults = true;
 									resultsFromNeighobrs.addAll(newResult.getLySnapshotResult().get(key));
 								}
+								neighborHas.get(newResult.getSender()).add(key);
 							}
 
 						}
@@ -184,13 +191,30 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				}
 
 				if (blankAnswers == 0) {
+//					for (Integer neighborInitiator : neighobringRegions) {
+//						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
+//								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+//
+////						AppConfig.timestampedErrorPrint("Saljem blank jer sam ja dobio sve blank njemu : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
+//
+//						sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
+//
+//						MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+//					}
+
 					break;
 				}
+
+				Set<Integer> toRemove = new HashSet<>();
 
 				if (!gotNewResults) {
 					for (Integer neighborInitiator : neighobringRegions) {
 						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
 								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+
+						AppConfig.timestampedErrorPrint("Saljem blank jer nisam dobio nista novo : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
+
+						toRemove.add(neighborInitiator);
 
 						sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
@@ -214,12 +238,18 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
 									AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
 
+							AppConfig.timestampedErrorPrint("Saljem blank jer vec ima sve : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
+
+							toRemove.add(neighborInitiator);
+
 							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
 							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 						} else {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
 									AppConfig.getInfoById(neighborInitiator), toSend, sentMessageNumber.get(neighborInitiator) + 1);
+
+							AppConfig.timestampedErrorPrint("Saljem content : " + neighborInitiator + " i broj poruke je " + (sentMessageNumber.get(neighborInitiator) + 1));
 
 							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
@@ -228,85 +258,13 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 					}
 				}
 
+				neighobringRegions.removeAll(toRemove);
+
 				for (Integer key : expectingMessage.keySet()) {
 					expectingMessage.put(key, expectingMessage.get(key) + 1);
 				}
 
 			}
-
-//			while (true) {
-//				int roundAnswers = expectedBlanks;
-//				Map<Integer, List<LYSnapshotResult>> newRegions = new HashMap<>();
-//				boolean gotNewResults = false;
-//
-//				for (int i = 0; i < expectedBlanks; i++) {
-//					try {
-//						SKRoundResult newResult = AppConfig.regionResponses.take();
-//						AppConfig.timestampedErrorPrint("USAO");
-//						if (newResult.getLySnapshotResult().isEmpty()) {
-//							roundAnswers--;
-//							AppConfig.timestampedErrorPrint("IZACICE");
-//						} else {
-//							for (Integer key : newResult.getLySnapshotResult().keySet()) {
-//								if (gotResultsFrom.add(key)) {
-//									newRegions.put(key, newResult.getLySnapshotResult().get(key));
-//									neighborHas.get(newResult.getSender()).add(key);
-//									gotNewResults = true;
-//									resultsFromNeighobrs.addAll(newResult.getLySnapshotResult().get(key));
-//								}
-//							}
-//
-//						}
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//				}
-//
-//				if (roundAnswers == 0) {
-//					break;
-//				}
-//
-//				if (!gotNewResults) {
-//					for (Integer neighborInitiator : neighobringRegions) {
-//						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-//								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
-//
-//						sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
-//
-//						MessageUtil.sendMessage(lyskNeighborNotifyMessage);
-//					}
-//				} else {
-//
-//					for (Integer neighborInitiator : neighobringRegions) {
-//						boolean shouldSend = false;
-//						Map<Integer, List<LYSnapshotResult>> toSend = new HashMap<>();
-//
-//						for (Integer newRegion : newRegions.keySet()) {
-//							if (!neighborHas.get(neighborInitiator).contains(newRegion)) {
-//								shouldSend = true;
-//
-//								toSend.put(newRegion, newRegions.get(newRegion));
-//							}
-//						}
-//
-//						if (!shouldSend) {
-//							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-//									AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
-//
-//							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
-//
-//							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
-//						} else {
-//							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-//									AppConfig.getInfoById(neighborInitiator), toSend, sentMessageNumber.get(neighborInitiator) + 1);
-//
-//							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
-//
-//							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
-//						}
-//					}
-//				}
-//			}
 
 			for (LYSnapshotResult lySnapshotResult : resultsFromNeighobrs) {
 				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
@@ -403,7 +361,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 			if (pendingMessage.getMessageNo() == expectingMessage.get(pendingMessage.getSender())) {
 				AppConfig.regionResponses.add(pendingMessage);
-
+				iterator.remove();
 				// Do this in round handler
 //				expectingMessage.put(pendingMessage.getSender(), expectingMessage.get(pendingMessage.getSender() + 1));
 			}
