@@ -21,7 +21,6 @@ public class TransactionMessage extends BasicMessage {
 
 	private final transient BitcakeManager bitcakeManager;
 
-	// TODO Potencijalno dodati da se salje region u poruci, tj. nekako oznaciti da je stanje "nesigurno"
 	public TransactionMessage(ServentInfo sender, ServentInfo receiver, int amount, BitcakeManager bitcakeManager) {
 		super(MessageType.TRANSACTION, sender, receiver, String.valueOf(amount));
 		this.bitcakeManager = bitcakeManager;
@@ -41,9 +40,18 @@ public class TransactionMessage extends BasicMessage {
 			LaiYangBitcakeManager lyBitcakeManager = (LaiYangBitcakeManager)bitcakeManager;
 			
 //			lyBitcakeManager.recordGiveTransaction(getReceiverInfo().getId(), amount);
-			for (SnapshotID snapshotID : getSnapshotIDS()) {
-				lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
-						amount);
+//			for (SnapshotID snapshotID : getSnapshotIDS()) {
+//				lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
+//						amount);
+//			}
+
+			if (getUncertainty()) {
+				lyBitcakeManager.recordUncertainGiveTransaction(getReceiverInfo().getId(), amount);
+			} else {
+				for (SnapshotID snapshotID : getSnapshotIDS()) {
+					lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
+							amount);
+				}
 			}
 		}
 	}
@@ -56,6 +64,13 @@ public class TransactionMessage extends BasicMessage {
 							   List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS,
 							   int messageId, BitcakeManager bitcakeManager) {
 		super(messageType, sender, receiver, routeList, messageText, snapshotIDS, messageId);
+		this.bitcakeManager = bitcakeManager;
+	}
+
+	private TransactionMessage(MessageType messageType, ServentInfo sender, ServentInfo receiver,
+							   List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS,
+							   int messageId, boolean isUncertain, BitcakeManager bitcakeManager) {
+		super(messageType, sender, receiver, routeList, messageText, snapshotIDS, messageId, isUncertain);
 		this.bitcakeManager = bitcakeManager;
 	}
 
@@ -76,5 +91,15 @@ public class TransactionMessage extends BasicMessage {
 
 		return new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(),
 				newRouteList, getMessageText(), getSnapshotIDS(), getMessageId(), getBitcakeManager());
+	}
+
+	@Override
+	public Message setUncertainty() {
+		boolean isUncertain;
+
+		isUncertain = AppConfig.region.get() != -1;
+
+		return new TransactionMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(), getRoute(),
+				getMessageText(), getSnapshotIDS(), getMessageId(), isUncertain, getBitcakeManager());
 	}
 }

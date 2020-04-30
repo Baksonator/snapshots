@@ -25,6 +25,7 @@ public class BasicMessage implements Message {
 	private final List<ServentInfo> routeList;
 	private final String messageText;
 	private final List<SnapshotID> snapshotIDS;
+	private final boolean isUncertain;
 	
 	//This gives us a unique id - incremented in every natural constructor.
 	private static AtomicInteger messageCounter = new AtomicInteger(0);
@@ -37,6 +38,7 @@ public class BasicMessage implements Message {
 		this.routeList = new ArrayList<>();
 		this.messageText = "";
 		this.snapshotIDS = new ArrayList<>();
+		this.isUncertain = false;
 		
 		this.messageId = messageCounter.getAndIncrement();
 	}
@@ -49,6 +51,7 @@ public class BasicMessage implements Message {
 		this.routeList = new ArrayList<>();
 		this.messageText = messageText;
 		this.snapshotIDS = new ArrayList<>();
+		this.isUncertain = false;
 		
 		this.messageId = messageCounter.getAndIncrement();
 	}
@@ -94,6 +97,9 @@ public class BasicMessage implements Message {
 	public List<SnapshotID> getSnapshotIDS() { return snapshotIDS; }
 
 	@Override
+	public boolean getUncertainty() { return isUncertain; }
+
+	@Override
 	public int getMessageId() {
 		return messageId;
 	}
@@ -106,6 +112,21 @@ public class BasicMessage implements Message {
 		this.routeList = routeList;
 		this.messageText = messageText;
 		this.snapshotIDS = snapshotIDS;
+		this.isUncertain = false;
+
+		this.messageId = messageId;
+	}
+
+	protected BasicMessage(MessageType type, ServentInfo originalSenderInfo, ServentInfo receiverInfo,
+						   List<ServentInfo> routeList, String messageText, List<SnapshotID> snapshotIDS, int messageId,
+						   boolean isUncertain) {
+		this.type = type;
+		this.originalSenderInfo = originalSenderInfo;
+		this.receiverInfo = receiverInfo;
+		this.routeList = routeList;
+		this.messageText = messageText;
+		this.snapshotIDS = snapshotIDS;
+		this.isUncertain = isUncertain;
 
 		this.messageId = messageId;
 	}
@@ -151,6 +172,20 @@ public class BasicMessage implements Message {
 
 		return new BasicMessage(getMessageType(), getOriginalSenderInfo(),
 				getReceiverInfo(), getRoute(), getMessageText(), snapshotIDS, getMessageId());
+	}
+
+	@Override
+	public Message setUncertainty() {
+		boolean isUncertain;
+
+		if (AppConfig.region.get() == -1) {
+			isUncertain = false;
+		} else {
+			isUncertain = true;
+		}
+
+		return new BasicMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(), getRoute(),
+				getMessageText(), getSnapshotIDS(), getMessageId(), isUncertain);
 	}
 
 	/**

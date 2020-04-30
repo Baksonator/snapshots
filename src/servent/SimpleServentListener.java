@@ -100,7 +100,7 @@ public class SimpleServentListener implements Runnable, Cancellable {
 						messageHandler = new LYSKNeighborNotifyHandler(clientMessage);
 						break;
 					case LYSK_TREE_NOTIFY:
-						messageHandler = new LYSKTreeNotifyHandler(clientMessage);
+						messageHandler = new LYSKTreeNotifyHandler(clientMessage, snapshotCollector.getBitcakeManager());
 						break;
 				}
 				

@@ -298,15 +298,19 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				MessageUtil.sendMessage(toSend);
 			}
 
-			// TODO Mora i da se azurira i isprazni "nesigurna" istorija
-			for (int initiator : initiators) {
-				int oldVersion = AppConfig.initiatorVersions.get(initiator);
-				AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
-			}
+			synchronized (AppConfig.versionLock) {
+				for (int initiator : initiators) {
+					int oldVersion = AppConfig.initiatorVersions.get(initiator);
+					AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
+				}
 
-			AppConfig.region.set(-1);
-			AppConfig.treeParent.set(-1);
-			AppConfig.treeChildren.clear();
+				((LaiYangBitcakeManager)bitcakeManager).setFromUnvertainHistory();
+				((LaiYangBitcakeManager)getBitcakeManager()).flushUncertainHistory();
+
+				AppConfig.region.set(-1);
+				AppConfig.treeParent.set(-1);
+				AppConfig.treeChildren.clear();
+			}
 
 			collectedLYValues.clear(); //reset for next invocation
 			collecting.set(false);

@@ -1,6 +1,8 @@
 package servent.handler.snapshot;
 
 import app.AppConfig;
+import app.snapshot_bitcake.BitcakeManager;
+import app.snapshot_bitcake.LaiYangBitcakeManager;
 import servent.handler.MessageHandler;
 import servent.message.Message;
 import servent.message.snapshot.LYSKTreeNotifyMessage;
@@ -9,9 +11,11 @@ import servent.message.util.MessageUtil;
 public class LYSKTreeNotifyHandler implements MessageHandler {
 
     private final Message clientMessage;
+    private final BitcakeManager bitcakeManager;
 
-    public LYSKTreeNotifyHandler(Message clientMessage) {
+    public LYSKTreeNotifyHandler(Message clientMessage, BitcakeManager bitcakeManager) {
         this.clientMessage = clientMessage;
+        this.bitcakeManager = bitcakeManager;
     }
 
     @Override
@@ -25,14 +29,18 @@ public class LYSKTreeNotifyHandler implements MessageHandler {
             MessageUtil.sendMessage(toSend);
         }
 
-        // TODO Mora i da se azurira i isprazni "nesigurna" istorija
-        for (int initiator : lyskTreeNotifyMessage.getInitiators()) {
-            int oldVersion = AppConfig.initiatorVersions.get(initiator);
-            AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
-        }
+        synchronized (AppConfig.versionLock) {
+            for (int initiator : lyskTreeNotifyMessage.getInitiators()) {
+                int oldVersion = AppConfig.initiatorVersions.get(initiator);
+                AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
+            }
 
-        AppConfig.region.set(-1);
-        AppConfig.treeParent.set(-1);
-        AppConfig.treeChildren.clear();
+            ((LaiYangBitcakeManager)bitcakeManager).setFromUnvertainHistory();
+            ((LaiYangBitcakeManager)bitcakeManager).flushUncertainHistory();
+
+            AppConfig.region.set(-1);
+            AppConfig.treeParent.set(-1);
+            AppConfig.treeChildren.clear();
+        }
     }
 }

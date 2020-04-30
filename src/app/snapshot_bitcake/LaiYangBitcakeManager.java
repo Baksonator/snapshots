@@ -28,17 +28,16 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 		return currentAmount.get();
 	}
 
-	// TODO Koristi ovo za "nesigurne istorije"
-	private final Map<Integer, Integer> giveHistory = new ConcurrentHashMap<>();
-	private final Map<Integer, Integer> getHistory = new ConcurrentHashMap<>();
+	private final Map<Integer, Integer> uncertainGiveHistory = new ConcurrentHashMap<>();
+	private final Map<Integer, Integer> uncertainGetHistory = new ConcurrentHashMap<>();
 
 	private final Map<SnapshotID, Map<Integer, Integer>> giveHistories = new ConcurrentHashMap<>();
 	private final Map<SnapshotID, Map<Integer, Integer>> getHistories = new ConcurrentHashMap<>();
 	
 	public LaiYangBitcakeManager() {
 		for(Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
-			giveHistory.put(neighbor, 0);
-			getHistory.put(neighbor, 0);
+			uncertainGiveHistory.put(neighbor, 0);
+			uncertainGetHistory.put(neighbor, 0);
 		}
 
 		for (Integer initId : AppConfig.initiatorIds) {
@@ -58,7 +57,6 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			AppConfig.initiatorVersions.put(collectorId, version);
 			initMapForSnapshot(collectorId, AppConfig.initiatorVersions.get(collectorId));
 
-			// TODO Prepraviti ovaj hak, mada mozda i ne moras
 			for (int initiator : AppConfig.initiatorIds) {
 				initMapForSnapshot(initiator, AppConfig.initiatorVersions.get(initiator) + 1);
 			}
@@ -67,9 +65,6 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			AppConfig.treeParent.set(parent);
 
 			recordedAmount = getCurrentBitcakeAmount();
-
-//			LYSnapshotResult snapshotResult = new LYSnapshotResult(
-//					AppConfig.myServentInfo.getId(), recordedAmount, giveHistory, getHistory);
 
 			LYSnapshotResult snapshotResult1 = new LYSnapshotResult(
 					AppConfig.myServentInfo.getId(), recordedAmount, giveHistories.get(new SnapshotID(collectorId, oldVersion)),
@@ -126,6 +121,31 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 		giveHistories.put(new SnapshotID(initId, version), newGiveMap);
 		getHistories.put(new SnapshotID(initId, version), newGetMap);
 	}
+
+	public void flushUncertainHistory() {
+		for(Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
+			uncertainGiveHistory.put(neighbor, 0);
+			uncertainGetHistory.put(neighbor, 0);
+		}
+	}
+
+	public void setFromUnvertainHistory() {
+		for (int initiator : AppConfig.initiatorIds) {
+			Map<Integer, Integer> newGiveMap = new ConcurrentHashMap<>();
+			Map<Integer, Integer> newGetMap = new ConcurrentHashMap<>();
+			for (Integer neighbor : AppConfig.myServentInfo.getNeighbors()) {
+				newGiveMap.put(neighbor, uncertainGiveHistory.get(neighbor));
+				newGetMap.put(neighbor, uncertainGetHistory.get(neighbor));
+			}
+
+			for (Map.Entry<Integer, Integer> entry : newGiveMap.entrySet()) {
+				giveHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator))).merge(entry.getKey(), entry.getValue(), Integer::sum);
+			}
+			for (Map.Entry<Integer, Integer> entry : newGetMap.entrySet()) {
+				getHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator))).merge(entry.getKey(), entry.getValue(), Integer::sum);
+			}
+		}
+	}
 	
 	private static class MapValueUpdater implements BiFunction<Integer, Integer, Integer> {
 		
@@ -141,12 +161,12 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 		}
 	}
 	
-	public void recordGiveTransaction(int neighbor, int amount) {
-		giveHistory.compute(neighbor, new MapValueUpdater(amount));
+	public void recordUncertainGiveTransaction(int neighbor, int amount) {
+		uncertainGiveHistory.compute(neighbor, new MapValueUpdater(amount));
 	}
 	
-	public void recordGetTransaction(int neighbor, int amount) {
-		getHistory.compute(neighbor, new MapValueUpdater(amount));
+	public void recordUncertainGetTransaction(int neighbor, int amount) {
+		uncertainGetHistory.compute(neighbor, new MapValueUpdater(amount));
 	}
 
 	public void recordGiveTransaction(SnapshotID snapshotID, int neighbor, int amount) {

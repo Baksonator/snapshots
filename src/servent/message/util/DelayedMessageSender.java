@@ -56,6 +56,7 @@ public class DelayedMessageSender implements Runnable {
 						messageToSend.getMessageType() != MessageType.LYSK_TREE_NOTIFY) {
 
 					messageToSend = messageToSend.setSnapshotIDS();
+					messageToSend = messageToSend.setUncertainty();
 				}
 
 //				messageToSend.sendEffect();

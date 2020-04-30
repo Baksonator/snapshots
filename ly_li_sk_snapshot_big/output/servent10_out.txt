@@ -1,180 +1,185 @@
-21:37:23 - Starting servent [10|localhost|1250]
-21:37:23 - Pausing for 1000 ms
-21:37:24 - Pausing for 60000 ms
-21:37:25 - Got message [11|98|6|TRANSACTION|10]
-21:37:26 - Got message [11|18|6|TRANSACTION|10]
-21:37:26 - Got message [11|44|6|TRANSACTION|10]
-21:37:26 - Got message [11|78|8|TRANSACTION|10]
-21:37:26 - Got message [11|3|9|TRANSACTION|10]
-21:37:26 - Got message [11|89|4|TRANSACTION|10]
-21:37:26 - Got message [11|31|5|TRANSACTION|10]
-21:37:26 - Got message [11|0|6|TRANSACTION|10]
-21:37:26 - Got message [11|60|8|TRANSACTION|10]
-21:37:26 - Got message [11|27|10|TRANSACTION|10]
-21:37:26 - Got message [11|69|3|TRANSACTION|10]
-21:37:26 - Got message [11|23|3|TRANSACTION|10]
-21:37:26 - Got message [11|28|6|TRANSACTION|10]
-21:37:26 - Got message [11|9|5|TRANSACTION|10]
-21:37:26 - Got message [11|67|8|TRANSACTION|10]
-21:37:26 - Got message [11|40|10|TRANSACTION|10]
-21:37:26 - Got message [11|84|1|TRANSACTION|10]
-21:37:26 - Got message [11|57|5|TRANSACTION|10]
-21:37:26 - Got message [11|22|5|TRANSACTION|10]
-21:37:26 - Got message [11|2|1|TRANSACTION|10]
-21:37:26 - Got message [11|29|7|TRANSACTION|10]
-21:37:27 - Got message [11|17|9|TRANSACTION|10]
-21:37:27 - Got message [11|6|2|TRANSACTION|10]
-21:37:27 - Got message [11|8|1|TRANSACTION|10]
-21:37:27 - Got message [11|58|8|TRANSACTION|10]
-21:37:27 - Got message [11|4|5|TRANSACTION|10]
-21:37:27 - Got message [11|68|4|TRANSACTION|10]
-21:37:27 - Got message [11|95|1|TRANSACTION|10]
-21:37:27 - Got message [11|1|9|TRANSACTION|10]
-21:37:27 - Got message [11|56|3|TRANSACTION|10]
-21:37:27 - Got message [11|43|2|TRANSACTION|10]
-21:37:27 - Got message [11|71|1|TRANSACTION|10]
-21:37:27 - Got message [11|79|2|TRANSACTION|10]
-21:37:27 - Got message [11|5|1|TRANSACTION|10]
-21:37:27 - Got message [11|81|7|TRANSACTION|10]
-21:37:27 - Got message [11|82|3|TRANSACTION|10]
-21:37:27 - Got message [11|63|6|TRANSACTION|10]
-21:37:27 - Got message [11|55|5|TRANSACTION|10]
-21:37:27 - Got message [11|46|8|TRANSACTION|10]
-21:37:27 - Got message [11|38|2|TRANSACTION|10]
-21:37:27 - Got message [11|7|10|TRANSACTION|10]
-21:37:27 - Got message [11|85|6|TRANSACTION|10]
-21:37:27 - Got message [11|94|8|TRANSACTION|10]
-21:37:27 - Got message [11|65|9|TRANSACTION|10]
-21:37:27 - Got message [11|25|2|TRANSACTION|10]
-21:37:27 - Got message [11|39|9|TRANSACTION|10]
-21:37:27 - Got message [11|37|2|TRANSACTION|10]
-21:37:27 - Got message [11|83|4|TRANSACTION|10]
-21:37:27 - Got message [11|19|8|TRANSACTION|10]
-21:37:27 - Got message [11|41|6|TRANSACTION|10]
-21:37:27 - Sending message [10|1|10|LY_MARKER_RESPONSE|9]
-21:37:27 - Sending message [10|0|10|LY_MARKER|9]
-21:37:27 - Got message [9|87|10|TRANSACTION|10]
-21:37:27 - Got message [9|12|6|TRANSACTION|10]
-21:37:27 - Got message [9|72|7|TRANSACTION|10]
-21:37:27 - Got message [9|140|9|TRANSACTION|10]
-21:37:27 - Got message [9|44|3|TRANSACTION|10]
-21:37:27 - Got message [9|65|1|TRANSACTION|10]
-21:37:28 - Got message [9|128|4|TRANSACTION|10]
-21:37:28 - Sending message [10|3|10|LY_MARKER_RESPONSE|11]
-21:37:28 - Got message [9|35|9|TRANSACTION|10]
-21:37:28 - Got message [9|85|6|TRANSACTION|10]
-21:37:28 - Got message [9|38|5|TRANSACTION|10]
-21:37:28 - Got message [9|50|3|TRANSACTION|10]
-21:37:28 - Got message [9|59|8|TRANSACTION|10]
-21:37:28 - Got message [9|89|2|TRANSACTION|10]
-21:37:28 - Got message [9|23|4|TRANSACTION|10]
-21:37:28 - Got message [9|112|6|TRANSACTION|10]
-21:37:28 - Sending message [10|2|10|LY_MARKER|11]
-21:37:28 - Got message [9|20|2|TRANSACTION|10]
-21:37:28 - Got message [9|100|2|TRANSACTION|10]
-21:37:28 - Got message [9|101|4|TRANSACTION|10]
-21:37:28 - Got message [9|134|7|TRANSACTION|10]
-21:37:28 - Got message [9|115|7|TRANSACTION|10]
-21:37:28 - Got message [9|6|10|TRANSACTION|10]
-21:37:28 - Got message [9|137|4|TRANSACTION|10]
-21:37:28 - Got message [9|155|-1|LY_MARKER_RESPONSE|10]
-21:37:28 - Got message [9|143|7|TRANSACTION|10]
-21:37:28 - Got message [9|149|5|TRANSACTION|10]
-21:37:28 - Got message [9|97|3|TRANSACTION|10]
-21:37:28 - Got message [9|32|9|TRANSACTION|10]
-21:37:28 - Got message [9|108|1|TRANSACTION|10]
-21:37:28 - Got message [9|56|5|TRANSACTION|10]
-21:37:28 - Got message [9|9|10|TRANSACTION|10]
-21:37:28 - Got message [9|47|5|TRANSACTION|10]
-21:37:28 - Got message [9|78|6|TRANSACTION|10]
-21:37:28 - Got message [9|122|10|TRANSACTION|10]
-21:37:28 - Got message [9|17|10|TRANSACTION|10]
-21:37:28 - Got message [9|123|3|TRANSACTION|10]
-21:37:28 - Got message [9|68|2|TRANSACTION|10]
-21:37:28 - Got message [9|53|9|TRANSACTION|10]
-21:37:28 - Got message [9|130|3|TRANSACTION|10]
-21:37:28 - Got message [9|41|9|TRANSACTION|10]
-21:37:28 - Got message [9|75|10|TRANSACTION|10]
-21:37:28 - Got message [9|95|4|TRANSACTION|10]
-21:37:28 - Got message [9|15|6|TRANSACTION|10]
-21:37:28 - Got message [9|103|4|TRANSACTION|10]
-21:37:28 - Got message [9|113|8|TRANSACTION|10]
-21:37:28 - Got message [9|146|8|TRANSACTION|10]
-21:37:28 - Got message [9|29|4|TRANSACTION|10]
-21:37:28 - Got message [9|26|8|TRANSACTION|10]
-21:37:28 - Got message [9|154|10|LY_MARKER|10]
-21:37:28 - Got message [9|121|6|TRANSACTION|10]
-21:37:28 - Got message [9|79|1|TRANSACTION|10]
-21:37:28 - Got message [9|3|7|TRANSACTION|10]
-21:37:28 - Got message [9|132|10|TRANSACTION|10]
-21:37:30 - Got message [11|100|10|LY_MARKER|10]
-21:37:30 - Got message [11|101|-1|LY_MARKER_RESPONSE|10]
-21:37:30 - Got message [11|104||LY_TELL|10]
-21:37:31 - Got message [9|156||LY_TELL|10]
-21:37:31 - My neighbors are: 0,6,14
-21:37:32 - Got message [14|7||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:32 - Got message [6|5||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:32 - Sending message [10|5||LYSK_NEIGHBOR_NOTIFY|6]
-21:37:32 - Sending message [10|6||LYSK_NEIGHBOR_NOTIFY|14]
-21:37:32 - Got results for regions: 14 from: 14 in round: 1
-21:37:32 - Got results for regions: 6 from: 6 in round: 1
-21:37:32 - Sending message [10|4||LYSK_NEIGHBOR_NOTIFY|0]
-21:37:33 - Got message [0|5||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:33 - Got results for regions: 0 from: 0 in round: 1
-21:37:34 - Sending message [10|8||LYSK_NEIGHBOR_NOTIFY|6]
-21:37:34 - Sending message [10|7||LYSK_NEIGHBOR_NOTIFY|0]
-21:37:34 - Sending message [10|9||LYSK_NEIGHBOR_NOTIFY|14]
-21:37:34 - Got message [6|8||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:34 - Got message [14|9||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:34 - Got message [0|7||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:34 - Got results for regions: 0,14 from: 6 in round: 2
-21:37:34 - Got results for regions: 6 from: 14 in round: 2
-21:37:34 - Got results for regions: 6 from: 0 in round: 2
-21:37:35 - Sending message [10|10||LYSK_NEIGHBOR_NOTIFY|0]
-21:37:35 - Got message [0|9||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:35 - Got blank message from: 0 in round: 3
-21:37:35 - Sending message [10|11||LYSK_NEIGHBOR_NOTIFY|6]
-21:37:36 - Sending message [10|12||LYSK_NEIGHBOR_NOTIFY|14]
-21:37:36 - Got message [6|11||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:36 - Got message [14|11||LYSK_NEIGHBOR_NOTIFY|10]
-21:37:36 - Got blank message from: 6 in round: 3
-21:37:36 - Got blank message from: 14 in round: 3
-21:37:36 - Recorded bitcake amount for 0 = 1000
-21:37:36 - Recorded bitcake amount for 1 = 1431
-21:37:36 - Recorded bitcake amount for 2 = 208
-21:37:36 - Recorded bitcake amount for 3 = 1500
-21:37:36 - Recorded bitcake amount for 4 = 436
-21:37:36 - Recorded bitcake amount for 5 = 1004
-21:37:36 - Recorded bitcake amount for 6 = 1000
-21:37:36 - Recorded bitcake amount for 7 = 715
-21:37:36 - Recorded bitcake amount for 8 = 760
-21:37:36 - Recorded bitcake amount for 9 = 1283
-21:37:36 - Recorded bitcake amount for 10 = 1000
-21:37:36 - Recorded bitcake amount for 11 = 475
-21:37:36 - Recorded bitcake amount for 12 = 1252
-21:37:36 - Recorded bitcake amount for 13 = -51
-21:37:36 - Recorded bitcake amount for 14 = 1000
-21:37:36 - Recorded bitcake amount for 15 = 1533
-21:37:36 - Unreceived bitcake amount: 278 from servent 2 to servent 0
-21:37:36 - Unreceived bitcake amount: 76 from servent 2 to servent 1
-21:37:36 - Unreceived bitcake amount: 28 from servent 4 to servent 1
-21:37:36 - Unreceived bitcake amount: 216 from servent 7 to servent 5
-21:37:36 - Unreceived bitcake amount: 153 from servent 7 to servent 6
-21:37:36 - Unreceived bitcake amount: 176 from servent 7 to servent 13
-21:37:36 - Unreceived bitcake amount: 265 from servent 11 to servent 10
-21:37:36 - Unreceived bitcake amount: 262 from servent 13 to servent 14
-21:37:36 - System bitcake count: 16000
-21:37:37 - Sending message [10|13||LYSK_TREE_NOTIFY|11]
-21:37:38 - Sending message [10|14||LYSK_TREE_NOTIFY|9]
-21:37:57 - Got message [9|163|0|LY_MARKER_RESPONSE|10]
-21:37:57 - Got message [9|162|0|LY_MARKER|10]
-21:37:57 - Got message [11|105|14|LY_MARKER|10]
-21:37:58 - Sending message [10|15|0|LY_MARKER|9]
-21:37:58 - Sending message [10|17|0|LY_MARKER|11]
-21:37:58 - Sending message [10|16|-1|LY_MARKER_RESPONSE|9]
-21:37:58 - Got message [11|106|14|LY_MARKER_RESPONSE|10]
-21:37:58 - My parent in tree is 9
-21:37:58 - Sending message [10|18|0|LY_MARKER_RESPONSE|11]
-21:37:59 - Sending message [10|19||LY_TELL|9]
-21:38:11 - Got message [9|165||LYSK_TREE_NOTIFY|10]
-21:38:24 - Stopping...
+02:46:31 - Starting servent [10|localhost|1250]
+02:46:32 - Pausing for 1000 ms
+02:46:34 - Pausing for 60000 ms
+02:46:36 - Got message [11|6|5|TRANSACTION|10]
+02:46:36 - Got message [11|2|6|TRANSACTION|10]
+02:46:36 - Got message [11|1|9|TRANSACTION|10]
+02:46:36 - Sending message [10|2|10|LY_MARKER|11]
+02:46:36 - Sending message [10|0|10|LY_MARKER|9]
+02:46:36 - Sending message [10|3|10|LY_MARKER_RESPONSE|11]
+02:46:36 - Got message [9|19|3|TRANSACTION|10]
+02:46:36 - Got message [9|56|5|TRANSACTION|10]
+02:46:36 - Got message [11|3|6|TRANSACTION|10]
+02:46:36 - Got message [11|4|5|TRANSACTION|10]
+02:46:36 - Got message [11|34|2|TRANSACTION|10]
+02:46:36 - Got message [11|80|5|TRANSACTION|10]
+02:46:36 - Got message [11|43|8|TRANSACTION|10]
+02:46:36 - Got message [9|102|9|TRANSACTION|10]
+02:46:36 - Got message [9|119|8|TRANSACTION|10]
+02:46:36 - Got message [11|25|6|TRANSACTION|10]
+02:46:36 - Got message [11|27|9|TRANSACTION|10]
+02:46:36 - Got message [9|117|2|TRANSACTION|10]
+02:46:36 - Got message [9|109|4|TRANSACTION|10]
+02:46:36 - Got message [9|65|6|TRANSACTION|10]
+02:46:36 - Got message [11|32|4|TRANSACTION|10]
+02:46:36 - Got message [9|74|1|TRANSACTION|10]
+02:46:36 - Got message [11|70|10|TRANSACTION|10]
+02:46:36 - Got message [9|32|7|TRANSACTION|10]
+02:46:36 - Got message [11|37|7|TRANSACTION|10]
+02:46:36 - Got message [11|82|10|TRANSACTION|10]
+02:46:36 - Got message [11|55|1|TRANSACTION|10]
+02:46:36 - Got message [9|54|9|TRANSACTION|10]
+02:46:36 - Got message [9|131|3|TRANSACTION|10]
+02:46:36 - Got message [9|149|9|TRANSACTION|10]
+02:46:36 - Got message [9|143|1|TRANSACTION|10]
+02:46:36 - Got message [9|12|3|TRANSACTION|10]
+02:46:36 - Got message [9|36|3|TRANSACTION|10]
+02:46:36 - Got message [9|91|7|TRANSACTION|10]
+02:46:37 - Got message [9|100|4|TRANSACTION|10]
+02:46:37 - Got message [9|30|7|TRANSACTION|10]
+02:46:37 - Got message [11|96|10|TRANSACTION|10]
+02:46:37 - Got message [11|88|1|TRANSACTION|10]
+02:46:37 - Got message [11|58|4|TRANSACTION|10]
+02:46:37 - Got message [11|72|5|TRANSACTION|10]
+02:46:37 - Got message [11|36|6|TRANSACTION|10]
+02:46:37 - Got message [11|62|6|TRANSACTION|10]
+02:46:37 - Got message [9|59|1|TRANSACTION|10]
+02:46:37 - Got message [9|38|5|TRANSACTION|10]
+02:46:37 - Got message [9|127|4|TRANSACTION|10]
+02:46:37 - Got message [11|21|9|TRANSACTION|10]
+02:46:37 - Got message [11|100|10|LY_MARKER|10]
+02:46:37 - Sending message [10|1|10|LY_MARKER_RESPONSE|9]
+02:46:37 - Got message [9|146|10|TRANSACTION|10]
+02:46:37 - Got message [9|77|4|TRANSACTION|10]
+02:46:37 - Got message [11|78|3|TRANSACTION|10]
+02:46:37 - Got message [11|57|5|TRANSACTION|10]
+02:46:37 - Got message [9|88|10|TRANSACTION|10]
+02:46:37 - Got message [9|33|9|TRANSACTION|10]
+02:46:37 - Got message [9|17|2|TRANSACTION|10]
+02:46:37 - Got message [9|51|7|TRANSACTION|10]
+02:46:37 - Got message [11|33|5|TRANSACTION|10]
+02:46:37 - Got message [11|35|2|TRANSACTION|10]
+02:46:37 - Got message [11|66|7|TRANSACTION|10]
+02:46:37 - Got message [11|41|10|TRANSACTION|10]
+02:46:37 - Got message [11|92|3|TRANSACTION|10]
+02:46:37 - Got message [11|59|5|TRANSACTION|10]
+02:46:37 - Got message [11|48|1|TRANSACTION|10]
+02:46:37 - Got message [9|132|10|TRANSACTION|10]
+02:46:37 - Got message [9|24|1|TRANSACTION|10]
+02:46:37 - Got message [9|137|1|TRANSACTION|10]
+02:46:37 - Got message [11|44|10|TRANSACTION|10]
+02:46:37 - Got message [11|98|6|TRANSACTION|10]
+02:46:37 - Got message [11|14|8|TRANSACTION|10]
+02:46:37 - Got message [9|90|1|TRANSACTION|10]
+02:46:37 - Got message [9|39|8|TRANSACTION|10]
+02:46:37 - Got message [9|45|2|TRANSACTION|10]
+02:46:37 - Got message [11|84|1|TRANSACTION|10]
+02:46:37 - Got message [9|110|1|TRANSACTION|10]
+02:46:37 - Got message [9|141|5|TRANSACTION|10]
+02:46:37 - Got message [9|71|8|TRANSACTION|10]
+02:46:37 - Got message [9|105|10|TRANSACTION|10]
+02:46:37 - Got message [9|138|8|TRANSACTION|10]
+02:46:37 - Got message [11|19|10|TRANSACTION|10]
+02:46:37 - Got message [11|86|7|TRANSACTION|10]
+02:46:37 - Got message [11|15|4|TRANSACTION|10]
+02:46:37 - Got message [11|29|3|TRANSACTION|10]
+02:46:37 - Got message [11|5|9|TRANSACTION|10]
+02:46:37 - Got message [9|155|-1|LY_MARKER_RESPONSE|10]
+02:46:37 - Got message [11|0|3|TRANSACTION|10]
+02:46:37 - Got message [9|154|10|LY_MARKER|10]
+02:46:37 - Got message [9|22|2|TRANSACTION|10]
+02:46:37 - Got message [11|20|3|TRANSACTION|10]
+02:46:37 - Got message [9|85|6|TRANSACTION|10]
+02:46:37 - Got message [11|68|10|TRANSACTION|10]
+02:46:37 - Got message [9|18|3|TRANSACTION|10]
+02:46:37 - Got message [9|80|2|TRANSACTION|10]
+02:46:37 - Got message [9|62|6|TRANSACTION|10]
+02:46:37 - Got message [11|90|2|TRANSACTION|10]
+02:46:37 - Got message [9|83|5|TRANSACTION|10]
+02:46:37 - Got message [9|113|3|TRANSACTION|10]
+02:46:37 - Got message [11|53|3|TRANSACTION|10]
+02:46:37 - Got message [9|96|1|TRANSACTION|10]
+02:46:37 - Got message [11|46|9|TRANSACTION|10]
+02:46:37 - Got message [9|126|7|TRANSACTION|10]
+02:46:37 - Got message [11|12|1|TRANSACTION|10]
+02:46:37 - Got message [9|92|9|TRANSACTION|10]
+02:46:37 - Got message [11|74|5|TRANSACTION|10]
+02:46:37 - Got message [9|68|8|TRANSACTION|10]
+02:46:37 - Got message [9|130|1|TRANSACTION|10]
+02:46:37 - Got message [11|76|8|TRANSACTION|10]
+02:46:37 - Got message [11|94|8|TRANSACTION|10]
+02:46:37 - Got message [11|101|-1|LY_MARKER_RESPONSE|10]
+02:46:40 - Got message [9|156||LY_TELL|10]
+02:46:41 - Got message [14|7||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:41 - Got message [11|104||LY_TELL|10]
+02:46:41 - My neighbors are: 0,6,14
+02:46:41 - Sending message [10|6||LYSK_NEIGHBOR_NOTIFY|14]
+02:46:41 - Got message [6|5||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:42 - Sending message [10|4||LYSK_NEIGHBOR_NOTIFY|0]
+02:46:42 - Got results for regions: 14 from: 14 in round: 1
+02:46:42 - Got results for regions: 6 from: 6 in round: 1
+02:46:42 - Sending message [10|5||LYSK_NEIGHBOR_NOTIFY|6]
+02:46:42 - Got message [0|5||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:43 - Got results for regions: 0 from: 0 in round: 1
+02:46:43 - Got message [14|9||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:44 - Sending message [10|9||LYSK_NEIGHBOR_NOTIFY|14]
+02:46:44 - Got message [0|7||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:44 - Got message [6|8||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:44 - Got results for regions: 6 from: 14 in round: 2
+02:46:44 - Got results for regions: 6 from: 0 in round: 2
+02:46:44 - Got results for regions: 0,14 from: 6 in round: 2
+02:46:44 - Sending message [10|7||LYSK_NEIGHBOR_NOTIFY|0]
+02:46:44 - Sending message [10|8||LYSK_NEIGHBOR_NOTIFY|6]
+02:46:45 - Sending message [10|11||LYSK_NEIGHBOR_NOTIFY|6]
+02:46:45 - Sending message [10|12||LYSK_NEIGHBOR_NOTIFY|14]
+02:46:45 - Sending message [10|10||LYSK_NEIGHBOR_NOTIFY|0]
+02:46:46 - Got message [14|11||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:46 - Got blank message from: 14 in round: 3
+02:46:46 - Got message [6|11||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:46 - Got message [0|9||LYSK_NEIGHBOR_NOTIFY|10]
+02:46:47 - Got blank message from: 6 in round: 3
+02:46:47 - Got blank message from: 0 in round: 3
+02:46:47 - Recorded bitcake amount for 0 = 1000
+02:46:47 - Recorded bitcake amount for 1 = 1258
+02:46:47 - Recorded bitcake amount for 2 = -66
+02:46:47 - Recorded bitcake amount for 3 = 1538
+02:46:47 - Recorded bitcake amount for 4 = 484
+02:46:47 - Recorded bitcake amount for 5 = 1011
+02:46:47 - Recorded bitcake amount for 6 = 1000
+02:46:47 - Recorded bitcake amount for 7 = 1216
+02:46:47 - Recorded bitcake amount for 8 = 695
+02:46:47 - Recorded bitcake amount for 9 = 1296
+02:46:47 - Recorded bitcake amount for 10 = 1000
+02:46:47 - Recorded bitcake amount for 11 = 980
+02:46:47 - Recorded bitcake amount for 12 = 902
+02:46:47 - Recorded bitcake amount for 13 = -62
+02:46:47 - Recorded bitcake amount for 14 = 1000
+02:46:47 - Recorded bitcake amount for 15 = 1214
+02:46:47 - Unreceived bitcake amount: 276 from servent 2 to servent 0
+02:46:47 - Unreceived bitcake amount: 118 from servent 2 to servent 1
+02:46:47 - Unreceived bitcake amount: 184 from servent 4 to servent 1
+02:46:47 - Unreceived bitcake amount: 209 from servent 4 to servent 2
+02:46:47 - Unreceived bitcake amount: 2 from servent 5 to servent 6
+02:46:47 - Unreceived bitcake amount: 9 from servent 5 to servent 9
+02:46:47 - Unreceived bitcake amount: 5 from servent 7 to servent 5
+02:46:47 - Unreceived bitcake amount: 31 from servent 7 to servent 6
+02:46:47 - Unreceived bitcake amount: 15 from servent 7 to servent 13
+02:46:47 - Unreceived bitcake amount: 20 from servent 11 to servent 10
+02:46:47 - Unreceived bitcake amount: 224 from servent 12 to servent 13
+02:46:47 - Unreceived bitcake amount: 157 from servent 12 to servent 14
+02:46:47 - Unreceived bitcake amount: 284 from servent 13 to servent 14
+02:46:47 - System bitcake count: 16000
+02:46:48 - Sending message [10|13||LYSK_TREE_NOTIFY|9]
+02:46:48 - Sending message [10|14||LYSK_TREE_NOTIFY|11]
+02:47:07 - Got message [11|107|14|LY_MARKER_RESPONSE|10]
+02:47:07 - Got message [9|162|0|LY_MARKER|10]
+02:47:07 - Got message [11|106|14|LY_MARKER|10]
+02:47:07 - Got message [9|163|0|LY_MARKER_RESPONSE|10]
+02:47:07 - My parent in tree is 11
+02:47:08 - Sending message [10|17|14|LY_MARKER|11]
+02:47:08 - Sending message [10|15|14|LY_MARKER|9]
+02:47:08 - Sending message [10|16|14|LY_MARKER_RESPONSE|9]
+02:47:09 - Sending message [10|18|-1|LY_MARKER_RESPONSE|11]
+02:47:09 - Sending message [10|19||LY_TELL|11]
+02:47:18 - Got message [11|111||LYSK_TREE_NOTIFY|10]
+02:47:34 - Stopping...

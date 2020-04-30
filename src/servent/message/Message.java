@@ -64,6 +64,11 @@ public interface Message extends Serializable {
 	 * SnapshotIDS for this message.
 	 */
 	List<SnapshotID> getSnapshotIDS();
+
+	/**
+	 * Uncertainty for this message.
+	 */
+	boolean getUncertainty();
 	
 	/**
 	 * An id that is unique per servent. Combined with servent id, it will be unique
@@ -84,10 +89,16 @@ public interface Message extends Serializable {
 	Message changeReceiver(Integer newReceiverId);
 
 	/**
-	 * Alters the message and returns a new copy with everything intact, execpt
-	 * the snapshotIDS being set to the ones the current node has
+	 * Alters the message and returns a new copy with everything intact, except
+	 * the snapshotIDS being set to the ones the current node has.
 	 */
 	Message setSnapshotIDS();
+
+	/**
+	 * Alters the message and returns a new copy with everything intact, except
+	 * the isUncertain flag being set if the node is participating in snapshot capture.
+	 */
+	Message setUncertainty();
 
 	/**
 	 * This method is invoked by the frameworks sender code. It is invoked
