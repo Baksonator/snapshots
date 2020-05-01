@@ -112,10 +112,6 @@ public class AppConfig {
 		}
 		
 		IS_CLIQUE = Boolean.parseBoolean(properties.getProperty("clique", "false"));
-//		String snapshotType = properties.getProperty("snapshot");
-//		if (snapshotType == null) {
-//			snapshotType = "none";
-//		}
 
 		String[] initiators = properties.getProperty("initiators").split(",");
 		initiatorIds = Arrays.stream(initiators)

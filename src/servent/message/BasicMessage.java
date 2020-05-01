@@ -178,11 +178,7 @@ public class BasicMessage implements Message {
 	public Message setUncertainty() {
 		boolean isUncertain;
 
-		if (AppConfig.region.get() == -1) {
-			isUncertain = false;
-		} else {
-			isUncertain = true;
-		}
+		isUncertain = AppConfig.region.get() != -1;
 
 		return new BasicMessage(getMessageType(), getOriginalSenderInfo(), getReceiverInfo(), getRoute(),
 				getMessageText(), getSnapshotIDS(), getMessageId(), isUncertain);

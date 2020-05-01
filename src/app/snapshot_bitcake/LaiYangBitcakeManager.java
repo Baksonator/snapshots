@@ -66,17 +66,15 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 
 			recordedAmount = getCurrentBitcakeAmount();
 
-			LYSnapshotResult snapshotResult1 = new LYSnapshotResult(
-					AppConfig.myServentInfo.getId(), recordedAmount, giveHistories.get(new SnapshotID(collectorId, oldVersion)),
+			LYSnapshotResult snapshotResult = new LYSnapshotResult(AppConfig.myServentInfo.getId(), recordedAmount,
+					giveHistories.get(new SnapshotID(collectorId, oldVersion)),
 					getHistories.get(new SnapshotID(collectorId, oldVersion)));
 			
 			if (collectorId == AppConfig.myServentInfo.getId()) {
-				snapshotCollector.addLYSnapshotInfo(
-						AppConfig.myServentInfo.getId(),
-						snapshotResult1);
+				snapshotCollector.addLYSnapshotInfo(AppConfig.myServentInfo.getId(), snapshotResult);
 			} else {
 				Thread helper = new Thread(new ChildResultCollector(AppConfig.myServentInfo.getNeighbors().size(),
-						snapshotResult1, parent));
+						snapshotResult, parent));
 				helper.start();
 			}
 
@@ -86,9 +84,11 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 				MessageUtil.sendMessage(clMarker);
 
 				if (neighbor == parent) {
+
 					LYMarkerResponseMessage lyMarkerResponse = new LYMarkerResponseMessage(AppConfig.myServentInfo,
 							AppConfig.getInfoById(neighbor), -1);
 					MessageUtil.sendMessage(lyMarkerResponse);
+
 				} else {
 
 					Message lyMarkerResponse = new LYMarkerResponseMessage(AppConfig.myServentInfo,
@@ -129,7 +129,7 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 		}
 	}
 
-	public void setFromUnvertainHistory() {
+	public void setFromUncertainHistory() {
 		for (int initiator : AppConfig.initiatorIds) {
 			Map<Integer, Integer> newGiveMap = new ConcurrentHashMap<>();
 			Map<Integer, Integer> newGetMap = new ConcurrentHashMap<>();
@@ -139,10 +139,12 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			}
 
 			for (Map.Entry<Integer, Integer> entry : newGiveMap.entrySet()) {
-				giveHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator))).merge(entry.getKey(), entry.getValue(), Integer::sum);
+				giveHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator)))
+						.merge(entry.getKey(), entry.getValue(), Integer::sum);
 			}
 			for (Map.Entry<Integer, Integer> entry : newGetMap.entrySet()) {
-				getHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator))).merge(entry.getKey(), entry.getValue(), Integer::sum);
+				getHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator)))
+						.merge(entry.getKey(), entry.getValue(), Integer::sum);
 			}
 		}
 	}

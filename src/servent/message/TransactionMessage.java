@@ -40,19 +40,19 @@ public class TransactionMessage extends BasicMessage {
 			LaiYangBitcakeManager lyBitcakeManager = (LaiYangBitcakeManager)bitcakeManager;
 			
 //			lyBitcakeManager.recordGiveTransaction(getReceiverInfo().getId(), amount);
-//			for (SnapshotID snapshotID : getSnapshotIDS()) {
-//				lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
-//						amount);
-//			}
-
-			if (getUncertainty()) {
-				lyBitcakeManager.recordUncertainGiveTransaction(getReceiverInfo().getId(), amount);
-			} else {
-				for (SnapshotID snapshotID : getSnapshotIDS()) {
-					lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
-							amount);
-				}
+			for (SnapshotID snapshotID : getSnapshotIDS()) {
+				lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
+						amount);
 			}
+
+//			if (getUncertainty()) {
+//				lyBitcakeManager.recordUncertainGiveTransaction(getReceiverInfo().getId(), amount);
+//			} else {
+//				for (SnapshotID snapshotID : getSnapshotIDS()) {
+//					lyBitcakeManager.recordGiveTransaction(snapshotID, getReceiverInfo().getId(),
+//							amount);
+//				}
+//			}
 		}
 	}
 

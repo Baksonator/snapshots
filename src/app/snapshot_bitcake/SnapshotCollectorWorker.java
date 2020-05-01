@@ -105,7 +105,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
 			}
 
-			// Exchange, for now everyone sends to everyone
+			//3 round exchange of results
 			neighobringRegions.remove(AppConfig.myServentInfo.getId());
 			int expectedBlanks = neighobringRegions.size();
 			Map<Integer, Set<Integer>> neighborHas = new HashMap<>();
@@ -117,10 +117,6 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			StringBuilder stringBuilder = new StringBuilder();
 			String comma = "";
 			for (Integer neighborInitiator : neighobringRegions) {
-				// Start first round, send messages to all neighboring regions about the stuff we know
-				// Update the neighborHas map where we track what our neighbor already has that we dont have to send
-				// Update the maps for counting the number of messages received
-
 				Set<Integer> sent = new HashSet<>();
 				sent.add(AppConfig.myServentInfo.getId());
 				neighborHas.put(neighborInitiator, sent);
@@ -161,7 +157,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						checkPendingMesasges();
+						checkPendingMessages();
 					}
 
 					try {
@@ -170,7 +166,8 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 						if (newResult.getLySnapshotResult().isEmpty()) {
 							blankAnswers--;
 							expectedBlanks--;
-							AppConfig.timestampedStandardPrint("Got blank message from: " +  newResult.getSender() + " in round: " + newResult.getMessageNo());
+							AppConfig.timestampedStandardPrint("Got blank message from: " +  newResult.getSender() +
+									" in round: " + newResult.getRoundNumber());
 						} else {
 
 							StringBuilder sb = new StringBuilder();
@@ -189,7 +186,8 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 								comma = ",";
 							}
 
-							AppConfig.timestampedStandardPrint("Got results for regions: " + sb.toString() + " from: " + newResult.getSender() + " in round: " + newResult.getMessageNo());
+							AppConfig.timestampedStandardPrint("Got results for regions: " + sb.toString() + " from: "
+									+ newResult.getSender() + " in round: " + newResult.getRoundNumber());
 						}
 
 						roundAnswers--;
@@ -207,8 +205,9 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 				if (!gotNewResults) {
 					for (Integer neighborInitiator : neighobringRegions) {
-						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-								AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(
+								AppConfig.myServentInfo, AppConfig.getInfoById(neighborInitiator), new HashMap<>(),
+								sentMessageNumber.get(neighborInitiator) + 1);
 
 						toRemove.add(neighborInitiator);
 
@@ -231,8 +230,9 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 						}
 
 						if (!shouldSend) {
-							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-									AppConfig.getInfoById(neighborInitiator), new HashMap<>(), sentMessageNumber.get(neighborInitiator) + 1);
+							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(
+									AppConfig.myServentInfo, AppConfig.getInfoById(neighborInitiator), new HashMap<>(),
+									sentMessageNumber.get(neighborInitiator) + 1);
 
 							toRemove.add(neighborInitiator);
 
@@ -240,8 +240,9 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
 						} else {
-							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-									AppConfig.getInfoById(neighborInitiator), toSend, sentMessageNumber.get(neighborInitiator) + 1);
+							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(
+									AppConfig.myServentInfo, AppConfig.getInfoById(neighborInitiator), toSend,
+									sentMessageNumber.get(neighborInitiator) + 1);
 
 							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
@@ -260,7 +261,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
 			}
 
-			//print
+			//4 print
 			int sum;
 			sum = 0;
 			for (Entry<Integer, LYSnapshotResult> nodeResult : collectedLYValues.entrySet()) {
@@ -290,21 +291,25 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			
 			AppConfig.timestampedStandardPrint("System bitcake count: " + sum);
 
+			//5 notify everyone that snapshot has ended so that they can take suitable steps
 			List<Integer> initiators = new ArrayList<>(gotResultsFrom);
 			for (int child : AppConfig.treeChildren) {
-				LYSKTreeNotifyMessage toSend = new LYSKTreeNotifyMessage(AppConfig.myServentInfo, AppConfig.getInfoById(child),
-						initiators);
+				LYSKTreeNotifyMessage toSend = new LYSKTreeNotifyMessage(AppConfig.myServentInfo,
+						AppConfig.getInfoById(child), initiators);
 
 				MessageUtil.sendMessage(toSend);
 			}
 
+			//6 take suitable steps of my own
 			synchronized (AppConfig.versionLock) {
 				for (int initiator : initiators) {
 					int oldVersion = AppConfig.initiatorVersions.get(initiator);
 					AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
 				}
 
-				((LaiYangBitcakeManager)bitcakeManager).setFromUnvertainHistory();
+				AppConfig.timestampedErrorPrint(AppConfig.initiatorVersions.toString());
+
+//				((LaiYangBitcakeManager)bitcakeManager).setFromUncertainHistory();
 				((LaiYangBitcakeManager)getBitcakeManager()).flushUncertainHistory();
 
 				AppConfig.region.set(-1);
@@ -342,17 +347,14 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 		working = false;
 	}
 
-	public void checkPendingMesasges() {
-
+	public void checkPendingMessages() {
 		Iterator<SKRoundResult> iterator = AppConfig.pendingResults.iterator();
 		while (iterator.hasNext()) {
 			SKRoundResult pendingMessage = iterator.next();
 
-			if (pendingMessage.getMessageNo() == expectingMessage.get(pendingMessage.getSender())) {
+			if (pendingMessage.getRoundNumber() == expectingMessage.get(pendingMessage.getSender())) {
 				AppConfig.regionResponses.add(pendingMessage);
 				iterator.remove();
-				// Do this in round handler
-//				expectingMessage.put(pendingMessage.getSender(), expectingMessage.get(pendingMessage.getSender() + 1));
 			}
 		}
 	}
