@@ -43,6 +43,7 @@ public class AppConfig {
 	public static BlockingQueue<SKRoundResult> regionResponses = new LinkedBlockingQueue<>();
 	public static BlockingQueue<Integer> neighborResponses = new LinkedBlockingDeque<>();
 	public static BlockingQueue<List<LYSnapshotResult>> childrenResponses = new LinkedBlockingQueue<>();
+	public static BlockingQueue<Map<Integer, List<LYSnapshotResult>>> childrenResponsesAlt = new LinkedBlockingQueue<>();
 	public static Map<Integer, Integer> initiatorVersions = new ConcurrentHashMap<>();
 	public static final Object versionLock = new Object();
 	

@@ -1,5 +1,6 @@
 package app.snapshot_bitcake;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -69,12 +70,22 @@ public class LaiYangBitcakeManager implements BitcakeManager {
 			LYSnapshotResult snapshotResult = new LYSnapshotResult(AppConfig.myServentInfo.getId(), recordedAmount,
 					giveHistories.get(new SnapshotID(collectorId, oldVersion)),
 					getHistories.get(new SnapshotID(collectorId, oldVersion)));
+
+			Map<Integer, LYSnapshotResult> allLySnapshotResults = new HashMap<>();
+			for (int initiator : AppConfig.initiatorIds) {
+				LYSnapshotResult lySnapshotResult = new LYSnapshotResult(AppConfig.myServentInfo.getId(), recordedAmount,
+						giveHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator))),
+						getHistories.get(new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator))));
+
+				allLySnapshotResults.put(initiator, lySnapshotResult);
+			}
 			
 			if (collectorId == AppConfig.myServentInfo.getId()) {
 				snapshotCollector.addLYSnapshotInfo(AppConfig.myServentInfo.getId(), snapshotResult);
+				((SnapshotCollectorWorker)snapshotCollector).setMyMap(allLySnapshotResults);
 			} else {
 				Thread helper = new Thread(new ChildResultCollector(AppConfig.myServentInfo.getNeighbors().size(),
-						snapshotResult, parent));
+						snapshotResult, parent, allLySnapshotResults));
 				helper.start();
 			}
 

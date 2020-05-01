@@ -36,28 +36,28 @@ public class TransactionHandler implements MessageHandler {
 					LaiYangBitcakeManager lyFinancialManager = (LaiYangBitcakeManager)bitcakeManager;
 					
 //					lyFinancialManager.recordGetTransaction(clientMessage.getOriginalSenderInfo().getId(), amountNumber);
-					for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
-						lyFinancialManager.recordGetTransaction(snapshotID, clientMessage.getOriginalSenderInfo().getId(),
-								amountNumber);
-					}
-
-//					if (clientMessage.getUncertainty()) {
-//						if (AppConfig.region.get() != -1) {
-//							lyFinancialManager.recordUncertainGetTransaction(clientMessage.getOriginalSenderInfo().getId(),
-//									amountNumber);
-//						} else {
-//							for (Integer initiator : AppConfig.initiatorIds) {
-//								SnapshotID snapshotID = new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator));
-//								lyFinancialManager.recordGetTransaction(snapshotID, clientMessage.getOriginalSenderInfo().getId(),
-//										amountNumber);
-//							}
-//						}
-//					} else {
-//						for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
-//							lyFinancialManager.recordGetTransaction(snapshotID, clientMessage.getOriginalSenderInfo().getId(),
-//									amountNumber);
-//						}
+//					for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
+//						lyFinancialManager.recordGetTransaction(snapshotID, clientMessage.getOriginalSenderInfo().getId(),
+//								amountNumber);
 //					}
+
+					if (clientMessage.getUncertainty()) {
+						if (AppConfig.region.get() != -1) {
+							lyFinancialManager.recordUncertainGetTransaction(clientMessage.getOriginalSenderInfo().getId(),
+									amountNumber);
+						} else {
+							for (Integer initiator : AppConfig.initiatorIds) {
+								SnapshotID snapshotID = new SnapshotID(initiator, AppConfig.initiatorVersions.get(initiator));
+								lyFinancialManager.recordGetTransaction(snapshotID, clientMessage.getOriginalSenderInfo().getId(),
+										amountNumber);
+							}
+						}
+					} else {
+						for (SnapshotID snapshotID : clientMessage.getSnapshotIDS()) {
+							lyFinancialManager.recordGetTransaction(snapshotID, clientMessage.getOriginalSenderInfo().getId(),
+									amountNumber);
+						}
+					}
 				}
 			}
 		} else {

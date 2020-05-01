@@ -21,6 +21,7 @@ public class LYTellHandler implements MessageHandler {
 
 			AppConfig.treeChildren.add(clientMessage.getOriginalSenderInfo().getId());
 			AppConfig.childrenResponses.add(lyTellMessage.getLYSnapshotResults());
+			AppConfig.childrenResponsesAlt.add(lyTellMessage.getAllLySnapshotResults());
 		} else {
 			AppConfig.timestampedErrorPrint("Tell amount handler got: " + clientMessage);
 		}

@@ -31,6 +31,8 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	
 	private final BitcakeManager bitcakeManager;
 
+	private Map<Integer, LYSnapshotResult> myMap;
+
 	public SnapshotCollectorWorker() {
 		bitcakeManager = new LaiYangBitcakeManager();
 	}
@@ -90,10 +92,20 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				k++;
 			}
 
+			Map<Integer, List<LYSnapshotResult>> allLySnapshotResults = new HashMap<>();
+			for (int initiator : AppConfig.initiatorIds) {
+				allLySnapshotResults.put(initiator, new ArrayList<>());
+			}
+
 			List<LYSnapshotResult> lySnapshotResults = new ArrayList<>();
 			while (children > 0) {
 				try {
 					lySnapshotResults.addAll(AppConfig.childrenResponses.take());
+
+					Map<Integer, List<LYSnapshotResult>> oneMapResult = AppConfig.childrenResponsesAlt.take();
+					for (Map.Entry<Integer, List<LYSnapshotResult>> entry : oneMapResult.entrySet()) {
+						allLySnapshotResults.get(entry.getKey()).addAll(oneMapResult.get(entry.getKey()));
+					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -113,6 +125,9 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 			Map<Integer, Integer> sentMessageNumber = new HashMap<>();
 
 			lySnapshotResults.add(collectedLYValues.get(AppConfig.myServentInfo.getId()));
+			for (int initiator : AppConfig.initiatorIds) {
+				allLySnapshotResults.get(initiator).add(myMap.get(initiator));
+			}
 
 			StringBuilder stringBuilder = new StringBuilder();
 			String comma = "";
@@ -125,7 +140,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				toSend.put(AppConfig.myServentInfo.getId(), lySnapshotResults);
 
 				LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(AppConfig.myServentInfo,
-						AppConfig.getInfoById(neighborInitiator), toSend, 1);
+						AppConfig.getInfoById(neighborInitiator), toSend, 1, allLySnapshotResults);
 
 				sentMessageNumber.put(neighborInitiator, 1);
 				expectingMessage.put(neighborInitiator, 1);
@@ -141,10 +156,22 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 			Set<Integer> gotResultsFrom = new HashSet<>();
 
+			Map<Integer, List<LYSnapshotResult>> allResultsFromNeighbors = new HashMap<>();
+			for (int initiator : AppConfig.initiatorIds) {
+				allResultsFromNeighbors.put(initiator, new ArrayList<>());
+			}
+
+			Map<Integer, Boolean> sentBlanks = new HashMap<>();
+			for (int neighborInitiator : neighobringRegions) {
+				sentBlanks.put(neighborInitiator, false);
+			}
+
 			List<LYSnapshotResult> resultsFromNeighobrs = new ArrayList<>();
 			while (true) {
 				int roundAnswers = expectedBlanks;
 				int blankAnswers = expectedBlanks;
+
+				Map<Integer, Map<Integer, List<LYSnapshotResult>>> newRegionsAlt = new HashMap<>();
 
 				Map<Integer, List<LYSnapshotResult>> newRegions = new HashMap<>();
 				boolean gotNewResults = false;
@@ -176,9 +203,13 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 							for (Integer key : newResult.getLySnapshotResult().keySet()) {
 								if (gotResultsFrom.add(key)) {
 									newRegions.put(key, newResult.getLySnapshotResult().get(key));
+									newRegionsAlt.put(key, newResult.getAllLySnapshotResults());
 									neighborHas.get(newResult.getSender()).add(key);
 									gotNewResults = true;
 									resultsFromNeighobrs.addAll(newResult.getLySnapshotResult().get(key));
+									for (int initiator : AppConfig.initiatorIds) {
+										allResultsFromNeighbors.get(initiator).addAll(newResult.getAllLySnapshotResults().get(initiator));
+									}
 								}
 								neighborHas.get(newResult.getSender()).add(key);
 								sb.append(comma);
@@ -198,6 +229,19 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				}
 
 				if (blankAnswers == 0) {
+					for (int neighborInitator : neighobringRegions) {
+						if (!sentBlanks.get(neighborInitator)) {
+
+							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(
+									AppConfig.myServentInfo, AppConfig.getInfoById(neighborInitator), new HashMap<>(),
+									sentMessageNumber.get(neighborInitator) + 1, new HashMap<>());
+
+							sentMessageNumber.put(neighborInitator, sentMessageNumber.get(neighborInitator) + 1);
+
+							MessageUtil.sendMessage(lyskNeighborNotifyMessage);
+						}
+					}
+
 					break;
 				}
 
@@ -207,9 +251,11 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 					for (Integer neighborInitiator : neighobringRegions) {
 						LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(
 								AppConfig.myServentInfo, AppConfig.getInfoById(neighborInitiator), new HashMap<>(),
-								sentMessageNumber.get(neighborInitiator) + 1);
+								sentMessageNumber.get(neighborInitiator) + 1, new HashMap<>());
 
 						toRemove.add(neighborInitiator);
+
+						sentBlanks.put(neighborInitiator, true);
 
 						sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
@@ -218,6 +264,11 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 				} else {
 
 					for (Integer neighborInitiator : neighobringRegions) {
+						Map<Integer, List<LYSnapshotResult>> toSendAll = new HashMap<>();
+						for (int initiators : AppConfig.initiatorIds) {
+							toSendAll.put(initiators, new ArrayList<>());
+						}
+
 						boolean shouldSend = false;
 						Map<Integer, List<LYSnapshotResult>> toSend = new HashMap<>();
 
@@ -226,15 +277,22 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 								shouldSend = true;
 
 								toSend.put(newRegion, newRegions.get(newRegion));
+
+								Map<Integer, List<LYSnapshotResult>> mapToMerge = newRegionsAlt.get(newRegion);
+								for (int initiator : AppConfig.initiatorIds) {
+									toSendAll.get(initiator).addAll(mapToMerge.get(initiator));
+								}
 							}
 						}
 
 						if (!shouldSend) {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(
 									AppConfig.myServentInfo, AppConfig.getInfoById(neighborInitiator), new HashMap<>(),
-									sentMessageNumber.get(neighborInitiator) + 1);
+									sentMessageNumber.get(neighborInitiator) + 1, new HashMap<>());
 
 							toRemove.add(neighborInitiator);
+
+							sentBlanks.put(neighborInitiator, true);
 
 							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
@@ -242,7 +300,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 						} else {
 							LYSKNeighborNotifyMessage lyskNeighborNotifyMessage = new LYSKNeighborNotifyMessage(
 									AppConfig.myServentInfo, AppConfig.getInfoById(neighborInitiator), toSend,
-									sentMessageNumber.get(neighborInitiator) + 1);
+									sentMessageNumber.get(neighborInitiator) + 1, toSendAll);
 
 							sentMessageNumber.put(neighborInitiator, sentMessageNumber.get(neighborInitiator) + 1);
 
@@ -257,7 +315,10 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 
 			}
 
-			for (LYSnapshotResult lySnapshotResult : resultsFromNeighobrs) {
+//			for (LYSnapshotResult lySnapshotResult : resultsFromNeighobrs) {
+//				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
+//			}
+			for (LYSnapshotResult lySnapshotResult : allResultsFromNeighbors.get(AppConfig.myServentInfo.getId())) {
 				addLYSnapshotInfo(lySnapshotResult.getServentId(), lySnapshotResult);
 			}
 
@@ -307,9 +368,7 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 					AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
 				}
 
-				AppConfig.timestampedErrorPrint(AppConfig.initiatorVersions.toString());
-
-//				((LaiYangBitcakeManager)bitcakeManager).setFromUncertainHistory();
+				((LaiYangBitcakeManager)bitcakeManager).setFromUncertainHistory();
 				((LaiYangBitcakeManager)getBitcakeManager()).flushUncertainHistory();
 
 				AppConfig.region.set(-1);
@@ -327,7 +386,11 @@ public class SnapshotCollectorWorker implements SnapshotCollector {
 	public void addLYSnapshotInfo(int id, LYSnapshotResult lySnapshotResult) {
 		collectedLYValues.put(id, lySnapshotResult);
 	}
-	
+
+	public void setMyMap(Map<Integer, LYSnapshotResult> myMap) {
+		this.myMap = myMap;
+	}
+
 	@Override
 	public void startCollecting() {
 		if (!AppConfig.myServentInfo.isInitiator()) {

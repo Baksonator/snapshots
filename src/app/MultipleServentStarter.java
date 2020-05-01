@@ -107,9 +107,16 @@ public class MultipleServentStarter {
 	public static void main(String[] args) {
 //		startServentTest("ly_li_sk_snapshot_errors");
 //		startServentTest("ly_li_sk_snapshot_seq");
+//		startServentTest("ly_li_sk_snapshot_seq_2");
 //		startServentTest("ly_li_sk_snapshot_small");
-		startServentTest("ly_li_sk_snapshot_small_2");
-//		startServentTest("ly_li_sk_snapshot_big");
+//		startServentTest("ly_li_sk_snapshot_small_2");
+//		startServentTest("ly_li_sk_snapshot_small_3");
+//		startServentTest("ly_li_sk_snapshot_small_4");
+//		startServentTest("ly_li_sk_snapshot_small_5");
+//		startServentTest("ly_li_sk_snapshot_small_6");
+//		startServentTest("ly_li_sk_snapshot_small_7");
+		startServentTest("ly_li_sk_snapshot_big");
+//		startServentTest("ly_li_sk_snapshot_big_2");
 	}
 
 }

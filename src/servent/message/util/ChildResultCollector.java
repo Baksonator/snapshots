@@ -5,21 +5,21 @@ import app.snapshot_bitcake.LYSnapshotResult;
 import servent.message.Message;
 import servent.message.snapshot.LYTellMessage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ChildResultCollector implements Runnable {
 
     private final int neighborCount;
     private final LYSnapshotResult myResult;
     private final int parent;
+    private final Map<Integer, LYSnapshotResult> allMyLySnapshotResults;
 
-    public ChildResultCollector(int neighborCount, LYSnapshotResult myResult, int parent) {
+    public ChildResultCollector(int neighborCount, LYSnapshotResult myResult, int parent, Map<Integer,
+            LYSnapshotResult> allMyLySnapshotResults) {
         this.neighborCount = neighborCount;
         this.myResult = myResult;
         this.parent = parent;
+        this.allMyLySnapshotResults = allMyLySnapshotResults;
     }
 
     @Override
@@ -42,10 +42,20 @@ public class ChildResultCollector implements Runnable {
             i++;
         }
 
+        Map<Integer, List<LYSnapshotResult>> allLySnapshotResults = new HashMap<>();
+        for (int initiator : AppConfig.initiatorIds) {
+            allLySnapshotResults.put(initiator, new ArrayList<>());
+        }
+
         List<LYSnapshotResult> lySnapshotResults = new ArrayList<>();
         while (children > 0) {
             try {
                 lySnapshotResults.addAll(AppConfig.childrenResponses.take());
+
+                Map<Integer, List<LYSnapshotResult>> oneMapResult = AppConfig.childrenResponsesAlt.take();
+                for (Map.Entry<Integer, List<LYSnapshotResult>> entry : oneMapResult.entrySet()) {
+                    allLySnapshotResults.get(entry.getKey()).addAll(oneMapResult.get(entry.getKey()));
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -54,9 +64,12 @@ public class ChildResultCollector implements Runnable {
 
         myResult.setNeighboringRegions(neighobringRegions);
         lySnapshotResults.add(myResult);
+        for (int initiator : AppConfig.initiatorIds) {
+            allLySnapshotResults.get(initiator).add(allMyLySnapshotResults.get(initiator));
+        }
 
         Message tellMessage = new LYTellMessage(
-                AppConfig.myServentInfo, AppConfig.getInfoById(parent), lySnapshotResults);
+                AppConfig.myServentInfo, AppConfig.getInfoById(parent), lySnapshotResults, allLySnapshotResults);
 
         AppConfig.timestampedStandardPrint("My parent in tree is " + parent);
 

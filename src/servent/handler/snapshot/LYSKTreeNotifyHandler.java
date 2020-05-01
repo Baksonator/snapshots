@@ -35,9 +35,7 @@ public class LYSKTreeNotifyHandler implements MessageHandler {
                 AppConfig.initiatorVersions.put(initiator, oldVersion + 1);
             }
 
-            AppConfig.timestampedErrorPrint(AppConfig.initiatorVersions.toString());
-
-//            ((LaiYangBitcakeManager)bitcakeManager).setFromUncertainHistory();
+            ((LaiYangBitcakeManager)bitcakeManager).setFromUncertainHistory();
             ((LaiYangBitcakeManager)bitcakeManager).flushUncertainHistory();
 
             AppConfig.region.set(-1);

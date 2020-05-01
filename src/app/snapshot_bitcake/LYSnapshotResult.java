@@ -47,4 +47,15 @@ public class LYSnapshotResult implements Serializable {
 	}
 	public Set<Integer> getNeighboringRegions() { return neighboringRegions; }
 	public void setNeighboringRegions(Set<Integer> neighboringRegions) { this.neighboringRegions = neighboringRegions; }
+
+	@Override
+	public String toString() {
+		return "LYSnapshotResult{" +
+				"serventId=" + serventId +
+				", recordedAmount=" + recordedAmount +
+				", giveHistory=" + giveHistory.toString() +
+				", getHistory=" + getHistory.toString() +
+				", neighboringRegions=" + neighboringRegions +
+				'}';
+	}
 }
