@@ -114,9 +114,9 @@ public class MultipleServentStarter {
 //		startServentTest("ly_li_sk_snapshot_small_4");
 //		startServentTest("ly_li_sk_snapshot_small_5");
 //		startServentTest("ly_li_sk_snapshot_small_6");
-//		startServentTest("ly_li_sk_snapshot_small_7");
 		startServentTest("ly_li_sk_snapshot_big");
 //		startServentTest("ly_li_sk_snapshot_big_2");
+//		startServentTest("ly_li_sk_snapshot_big_3");
 	}
 
 }

@@ -1,0 +1,1 @@
+Najpre cvor 4 sam radi snapshot, zatim cvorovi 2 i 4 konkuretno rade snapshot.

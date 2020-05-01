@@ -1,0 +1,2 @@
+Vremenski najzahtevniji test case. Cvor 6 tri puta, na svakih 30 sekundi, poziva snapshot. Prvi put to radi sam,
+drugi put konkurentno sa cvorom 0, treci put konkuretno sa cvorom 14.

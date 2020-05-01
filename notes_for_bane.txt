@@ -1,0 +1,10 @@
+Ako se neki testovi ne zavrsavaju, verovatno se desila nezgodna situacija da je inicijator pokusao da pokrene snapshot,
+dok je prethodni jos u fazi razmene po rundama ili raspustanja stabla. U tom slucaju samo povecati pauze izmedju
+komandi. Na ovo najvise obratiti paznju kod testa 'big_3', ali nije iskljuceno da moze da se desi i za ostale, mada
+se meni to nije desavalo, jedno za spomenuti.
+
+Informacije o roditelju u stablu su u obliku "My parent in tree is: x", po tome ih traziti.
+
+Informacije o razmeni po rundama su u obliku "Got * from: x in round: y", po tome ih traziti.
+
+Svi zasebni test case-ovi su objasnjeni u svojim folderima.

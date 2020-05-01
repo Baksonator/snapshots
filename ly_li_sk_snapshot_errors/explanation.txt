@@ -1,0 +1,1 @@
+Test case za graciozno hendlovanje gresaka, obratiti paznju na cvorove 2 i 4.

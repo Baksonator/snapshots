@@ -1,0 +1,1 @@
+Najpre cvor 4 sam radi snapshot, nakon toga cvor 2 sam radi snapshot.

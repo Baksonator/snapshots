@@ -1,0 +1,1 @@
+Cvorovi 2 i 4 najpre rade snapshot istovremeno, zatim cvor 4 sam radi snapshot.

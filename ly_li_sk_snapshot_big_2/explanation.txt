@@ -1,0 +1,1 @@
+Najpre se poziva snapshot poput onoga na prezentaciji, zatim kasnije cvorovi 6 i 10 ponovo pokrecu snapshot istovremeno.
